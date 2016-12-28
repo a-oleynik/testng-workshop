@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="All Tests" parallel="classes" thread-count="2" verbose="5" >
+    <test name="Regression" preserve-order="false">
+        <classes>
+            <class name="com.dataart.qa.workshop.testng.test.AssertTest">
+                <methods>
+                    <include name="multiplication_test"/>
+                </methods>
+            </class>
+            <class name="com.dataart.qa.workshop.testng.test.Example1Test">
+                <methods>
+                    <exclude name="example1_the_second_test"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
+
+
+

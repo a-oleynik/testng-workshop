@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="All Tests" parallel="classes" thread-count="2" verbose="5" >
+    <test name="GroupsOfGroups" preserve-order="false">
+        <groups>
+            <define name="all">
+                <include name="Smoke"></include>
+                <include name="Regression"></include>
+                <include name="Fail"></include>
+            </define>
+            <run>
+                <include name="all"></include>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.dataart.qa.workshop.testng.test.GroupTest">
+            </class>
+        </classes>
+    </test>
+</suite>
+
+
+
