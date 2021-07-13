@@ -1,5 +1,9 @@
-# TestNG examples for IT Talk "JUnit vs. TestNG".
+# TestNG 6.14.3 examples for IT Talk "JUnit 4 vs. TestNG".
 
-Slides can be found [TestNG vs. JUnit](https://www.slideshare.net/oleynikandrey/testng-vs-junit)
+Slides can be found [TestNG vs. JUnit 4](https://www.slideshare.net/oleynikandrey/testng-vs-junit)
 
-The webinar is here [TestNG vs. JUnit IT talk, DataArt Wroclaw](https://youtu.be/3C-Nu5mkyOQ?t=3189)
+The webinar is here [TestNG vs. JUnit 4 IT talk, DataArt Wrocław](https://youtu.be/3C-Nu5mkyOQ?t=3189)
+
+To run the project and generate the reports execute cmd:
+
+            mvn clean test

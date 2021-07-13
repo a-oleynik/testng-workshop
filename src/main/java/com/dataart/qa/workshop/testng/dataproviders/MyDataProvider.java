@@ -1,6 +1,7 @@
 package com.dataart.qa.workshop.testng.dataproviders;
 
 import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import org.testng.annotations.DataProvider;
 
 import java.io.FileReader;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 
 public class MyDataProvider {
     @DataProvider(name = "factorialFromFile")
-    public static Object[][] factorialDataFromFile() throws IOException, NumberFormatException {
+    public static Object[][] factorialDataFromFile() throws IOException, NumberFormatException, CsvValidationException {
         ArrayList<Object[]> outData = new ArrayList<>();
         try {
             CSVReader csvFile = new CSVReader(new FileReader("src/test/resources/numbers.csv"));
@@ -21,10 +22,7 @@ public class MyDataProvider {
                 }
                 outData.add(cells);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
-        } catch (NumberFormatException e) {
+        } catch (IOException | NumberFormatException | CsvValidationException e) {
             e.printStackTrace();
             throw e;
         }
