@@ -6,6 +6,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import static java.lang.String.format;
+
 @Listeners(value = MyMethodListener.class)
 public class MethodListenerTest {
     @BeforeMethod
@@ -41,6 +43,9 @@ public class MethodListenerTest {
     @Test
     public void method_listener_fail_test() {
         System.out.println("Fail test");
-        Assert.fail("The test is failed somehow");
+        boolean isFailed = false;
+        if (isFailed) {
+            Assert.fail(format("The test is failed because isFailed equals to %s", isFailed));
+        }
     }
 }
