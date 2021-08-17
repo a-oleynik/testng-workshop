@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="All Tests" parallel="classes" thread-count="2" verbose="5" >
     <test name="Regression" preserve-order="false">
         <classes>
-            <class name="com.dataart.qa.workshop.testng.test.FixturesTest">
+            <class name="com.oleynik.qa.workshop.testng.general.FixturesTest">
             </class>
-            <class name="com.dataart.qa.workshop.testng.test.ParameterizationTest">
+            <class name="com.oleynik.qa.workshop.testng.ddt.StaticDataProviderTest">
             </class>
         </classes>
     </test>
