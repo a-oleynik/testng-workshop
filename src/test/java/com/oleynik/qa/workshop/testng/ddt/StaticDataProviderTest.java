@@ -1,10 +1,11 @@
-package com.oleynik.qa.workshop.testng;
+package com.oleynik.qa.workshop.testng.ddt;
 
+import com.oleynik.qa.workshop.testng.Factorial;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class ParameterizationTest {
+public class StaticDataProviderTest {
 
     @DataProvider(name = "factorial")
     public static Object[][] multiplyNumbers() {
@@ -12,7 +13,7 @@ public class ParameterizationTest {
     }
 
     @Test(dataProvider = "factorial")
-    public void test_factorial(long number, long expected){
-        Assert.assertEquals(Factorial.factorial(number), expected, "Factorial function works wrong.");
+    public void static_data_provider_test(long number, long expected){
+        Assert.assertEquals(Factorial.factorial(number), expected, "Factorial function is wrong.");
     }
 }

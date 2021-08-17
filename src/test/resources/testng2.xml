@@ -5,7 +5,7 @@
         <classes>
             <class name="com.oleynik.qa.workshop.testng.FixturesTest">
             </class>
-            <class name="com.oleynik.qa.workshop.testng.ParameterizationTest">
+            <class name="com.oleynik.qa.workshop.testng.ddt.StaticDataProviderTest">
             </class>
         </classes>
     </test>
