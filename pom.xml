@@ -12,6 +12,7 @@
         <java.version>1.8</java.version>
         <testng.version>7.3.0</testng.version>
         <opencsv.version>5.5</opencsv.version>
+        <asserj.version>3.20.2</asserj.version>
         <hamcrest.version>2.2</hamcrest.version>
         <lombok.version>1.18.20</lombok.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,6 +28,11 @@
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
             <version>${opencsv.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${asserj.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
