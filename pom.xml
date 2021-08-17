@@ -13,6 +13,7 @@
         <testng.version>7.3.0</testng.version>
         <opencsv.version>5.5</opencsv.version>
         <hamcrest.version>2.2</hamcrest.version>
+        <lombok.version>1.18.20</lombok.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -32,6 +33,12 @@
             <artifactId>hamcrest-library</artifactId>
             <version>${hamcrest.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -60,7 +67,7 @@
                     <includes>
                         <include>*Test.java</include>
                     </includes>
-                    <parallel>classes</parallel>
+                    <parallel>methods</parallel>
                     <threadCount>3</threadCount>
                 </configuration>
             </plugin>

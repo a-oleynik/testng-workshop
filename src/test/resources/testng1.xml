@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="All Tests" parallel="classes" thread-count="2" verbose="5" >
     <test name="Regression" preserve-order="false">
         <classes>
-            <class name="com.oleynik.qa.workshop.testng.AssertTest">
+            <class name="com.oleynik.qa.workshop.testng.general.AssertTest">
                 <methods>
                     <include name="multiplication_test"/>
                 </methods>
             </class>
-            <class name="com.oleynik.qa.workshop.testng.Example1Test">
+            <class name="com.oleynik.qa.workshop.testng.general.FixturesTest">
                 <methods>
-                    <exclude name="example1_the_second_test"/>
+                    <exclude name="fixtures_the_first_test"/>
                 </methods>
             </class>
         </classes>
     </test>
 </suite>
-
-
-
