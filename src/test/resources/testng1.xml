@@ -3,12 +3,12 @@
 <suite name="All Tests" parallel="classes" thread-count="2" verbose="5" >
     <test name="Regression" preserve-order="false">
         <classes>
-            <class name="com.dataart.qa.workshop.testng.test.AssertTest">
+            <class name="com.oleynik.qa.workshop.testng.AssertTest">
                 <methods>
                     <include name="multiplication_test"/>
                 </methods>
             </class>
-            <class name="com.dataart.qa.workshop.testng.test.Example1Test">
+            <class name="com.oleynik.qa.workshop.testng.Example1Test">
                 <methods>
                     <exclude name="example1_the_second_test"/>
                 </methods>

@@ -13,7 +13,7 @@
             </run>
         </groups>
         <classes>
-            <class name="com.dataart.qa.workshop.testng.test.GroupTest">
+            <class name="com.oleynik.qa.workshop.testng.GroupTest">
             </class>
         </classes>
     </test>
