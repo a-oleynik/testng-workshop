@@ -11,7 +11,7 @@ public class AssertTest {
 
     @Test
     public void assert_equals_multiplication_test() {
-        System.out.println("Multiplication test.");
+        System.out.println("Multiplication test");
         Assert.assertEquals(2*5, 10, "Multiplication result is wrong");
     }
 
