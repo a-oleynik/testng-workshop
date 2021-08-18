@@ -11,6 +11,6 @@ public class OuterDataProviderTest {
     @Test(dataProvider = "factorialFromFile", dataProviderClass = MyDataProvider.class)
     @DataSource(path = "src/test/resources/numbers.csv")
     public void outer_data_provider_test(long number, long expected) {
-        Assert.assertEquals(Factorial.factorial(number), expected, "Factorial function is wrong.");
+        Assert.assertEquals(Factorial.factorial(number), expected, "Factorial function is wrong");
     }
 }

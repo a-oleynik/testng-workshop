@@ -17,7 +17,7 @@ public class AssertTest {
 
     @Test
     public void assert_equals_division_test(){
-        System.out.println("Division test.");
+        System.out.println("Division test");
         Assert.assertEquals(10/5.0, 2.0, 0);
     }
 

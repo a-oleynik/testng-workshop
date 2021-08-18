@@ -18,13 +18,13 @@ public class ExecutionOrderTest {
 
     @Test(priority = 3)
     public void execution_order_with_multiplication_test() {
-        System.out.println("Multiplication test.");
+        System.out.println("Multiplication test");
         assertEquals(2*5, 10, "Multiplication result is wrong");
     }
 
     @Test(priority = 1)
     public void execution_order_with_division_test() {
-        System.out.println("Division test.");
+        System.out.println("Division test");
         assertEquals(2.0, 10 / 5.0, 0);
     }
 

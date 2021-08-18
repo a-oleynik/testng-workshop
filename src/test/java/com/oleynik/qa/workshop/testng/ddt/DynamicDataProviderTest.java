@@ -44,6 +44,6 @@ public class DynamicDataProviderTest {
     @Test(dataProvider = "factorialFromFile")
     @DataSource(path = "src/test/resources/numbers.csv")
     public void dynamic_data_provider_test(long number, long expected) {
-        Assert.assertEquals(Factorial.factorial(number), expected, "Factorial function is wrong.");
+        Assert.assertEquals(Factorial.factorial(number), expected, "Factorial function is wrong");
     }
 }

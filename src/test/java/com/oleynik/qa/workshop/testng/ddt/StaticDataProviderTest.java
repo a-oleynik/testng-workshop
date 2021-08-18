@@ -14,6 +14,6 @@ public class StaticDataProviderTest {
 
     @Test(dataProvider = "factorial")
     public void static_data_provider_test(long number, long expected){
-        Assert.assertEquals(Factorial.factorial(number), expected, "Factorial function is wrong.");
+        Assert.assertEquals(Factorial.factorial(number), expected, "Factorial function is wrong");
     }
 }
