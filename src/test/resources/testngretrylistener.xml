@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Retry Tests" parallel="classes" thread-count="2" verbose="5">
+    <listeners>
+        <listener class-name="com.oleynik.qa.workshop.testng.listeners.RetryTransformer"/>
+    </listeners>
+    <test name="Retry TestNG Test" preserve-order="true">
+        <classes>
+            <class name="com.oleynik.qa.workshop.testng.retry.RetryTransformerTest">
+            </class>
+        </classes>
+    </test>
+</suite>
+
+
+
