@@ -70,9 +70,12 @@
 <!--                    <suiteXmlFiles>
                         <suiteXmlFile>src\test\resources\testng2.xml</suiteXmlFile>
                     </suiteXmlFiles>-->
-                    <includes>
+<!--                    <includes>
                         <include>*Test.java</include>
-                    </includes>
+                    </includes>-->
+<!--                    <excludes>
+                        <exclude></exclude>
+                    </excludes>-->
                     <parallel>methods</parallel>
                     <threadCount>3</threadCount>
                 </configuration>
