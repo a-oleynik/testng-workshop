@@ -6,9 +6,9 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 
 public class NestedTest {
-    class Multiply {
+    public class Multiply {
         @Test
-        void multiplication_with_zero_test() {
+        public void multiplication_with_zero_test() {
             int x = 0;
             int y = 10;
             System.out.printf("Multiplying %s on %s%n", x, y);
@@ -16,7 +16,7 @@ public class NestedTest {
         }
 
         @Test
-        void multiplication_with_two_negatives_test() {
+        public void multiplication_with_two_negatives_test() {
             int x = -1;
             int y = -10;
             System.out.printf("Multiplying %s on %s%n", x, y);
@@ -24,7 +24,7 @@ public class NestedTest {
         }
 
         @Test
-        void multiplication_with_two_fractions_test() {
+        public void multiplication_with_two_fractions_test() {
             double x = 0.5;
             double y = 0.0005;
             System.out.printf("Multiplying %s on %s%n", x, y);
@@ -32,9 +32,9 @@ public class NestedTest {
         }
     }
 
-    class Divide {
+    public class Divide {
         @Test
-        void division_with_two_fractions_test() {
+        public void division_with_two_fractions_test() {
             double x = 0.5;
             double y = 0.0005;
             System.out.printf("Dividing %s by %s%n", x, y);
@@ -42,7 +42,7 @@ public class NestedTest {
         }
 
         @Test
-        void division_with_two_negatives_test() {
+        public void division_with_two_negatives_test() {
             double x = -1;
             double y = -10;
             System.out.printf("Dividing %s by %s%n", x, y);
@@ -50,9 +50,9 @@ public class NestedTest {
         }
     }
 
-    class Add {
+    public class Add {
         @Test
-        void addition_with_two_negatives_test() {
+        public void addition_with_two_negatives_test() {
             double x = -1;
             double y = -10;
             System.out.printf("Adding %s to %s%n", x, y);
@@ -60,7 +60,7 @@ public class NestedTest {
         }
 
         @Test
-        void addition_with_two_fractions_test() {
+        public void addition_with_two_fractions_test() {
             double x = 0.5;
             double y = 0.0005;
             System.out.printf("Adding %s to %s%n", x, y);
