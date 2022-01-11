@@ -11,10 +11,10 @@
     <properties>
         <java.version>1.8</java.version>
         <testng.version>7.3.0</testng.version>
-        <opencsv.version>5.5.1</opencsv.version>
-        <asserj.version>3.20.2</asserj.version>
+        <opencsv.version>5.5.2</opencsv.version>
+        <asserj.version>3.22.0</asserj.version>
         <hamcrest.version>2.2</hamcrest.version>
-        <lombok.version>1.18.20</lombok.version>
+        <lombok.version>1.18.22</lombok.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
