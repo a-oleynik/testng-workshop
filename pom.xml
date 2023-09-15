@@ -9,7 +9,7 @@
     <name>TestNG 7 workshop examples</name>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
         <testng.version>7.8.0</testng.version>
         <opencsv.version>5.8</opencsv.version>
         <asserj.version>3.24.2</asserj.version>
