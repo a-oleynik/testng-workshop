@@ -1,4 +1,4 @@
-# TestNG 7.9.0 examples for IT Talk "JUnit vs. TestNG".
+# TestNG 7.10.2 examples for IT Talk "JUnit vs. TestNG".
 
 Slides can be found [TestNG vs. JUnit 4](https://www.slideshare.net/oleynikandrey/it-talk-testng-6-vs-junit-4/)
 
