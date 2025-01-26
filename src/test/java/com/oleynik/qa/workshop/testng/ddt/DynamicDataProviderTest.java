@@ -15,7 +15,6 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.oleynik.qa.workshop.testng.dataproviders.MyDataProvider.getDataSourcePathFromMethod;
 
@@ -33,10 +32,9 @@ public class DynamicDataProviderTest {
                     .map(e -> Arrays.stream(e)
                             .map(Long::parseLong)
                             .toArray())
-                    .collect(Collectors.toList())
+                    .toList()
                     .iterator();
         } catch (IOException | NumberFormatException | CsvException e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
