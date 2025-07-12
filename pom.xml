@@ -11,7 +11,7 @@
     <properties>
         <java.version>21</java.version>
         <testng.version>7.11.0</testng.version>
-        <opencsv.version>5.10</opencsv.version>
+        <opencsv.version>5.11.2</opencsv.version>
         <asserj.version>3.27.3</asserj.version>
         <hamcrest.version>3.0</hamcrest.version>
         <lombok.version>1.18.38</lombok.version>
