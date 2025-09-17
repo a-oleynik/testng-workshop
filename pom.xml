@@ -11,10 +11,10 @@
     <properties>
         <java.version>21</java.version>
         <testng.version>7.11.0</testng.version>
-        <opencsv.version>5.11.2</opencsv.version>
+        <opencsv.version>5.12.0</opencsv.version>
         <asserj.version>3.27.3</asserj.version>
         <hamcrest.version>3.0</hamcrest.version>
-        <lombok.version>1.18.38</lombok.version>
+        <lombok.version>1.18.40</lombok.version>
         <slf4j.version>2.0.17</slf4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -73,7 +73,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.3</version>
+                <version>3.5.4</version>
                 <configuration>
 <!--                    <suiteXmlFiles>
                         <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
