@@ -264,11 +264,16 @@ mvn clean site
 
 ## 💻 Command Examples
 
-### Run all tests
+### Run all tests (and generate the reports)
 
 ```bash
 mvn clean test
 ```
+
+> Reports are written to:
+>
+> - Surefire report: `target/surefire-reports/index.html`
+> - TestNG emailable report: `target/surefire-reports/emailable-report.html`
 
 ### Run a single test class
 
@@ -330,16 +335,9 @@ mvn clean install -DskipTests
 mvn clean surefire-report:report
 ```
 
-### Generate full Maven site with Surefire report
-
-```bash
-mvn clean site
-```
-
-> Reports are written to: 
-> 
-> - Surefire report: `target/surefire-reports/index.html`
-> - TestNG emailable report: `target/surefire-reports/emailable-report.html`
+> Surefire report is written to:
+>
+> - Surefire report: `target/reports/surefire.html`
 
 ### Enable full debug logging for troubleshooting
 
