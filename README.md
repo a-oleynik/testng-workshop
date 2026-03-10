@@ -394,7 +394,7 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - [Maven Surefire Plugin](https://maven.apache.org/surefire/maven-surefire-plugin/)
 - [Maven Surefire Report Plugin](https://maven.apache.org/surefire/maven-surefire-report-plugin/)
 - [JUnit Workshop](https://github.com/a-oleynik/junit-workshop) — companion JUnit 6 examples
-- [Selenium Example — JUnit 6 branch](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world Selenium framework using JUnit 6
+- [Selenium Example](https://github.com/a-oleynik/selenium-example) — real-world Selenium framework using TestNG
 
 ---
 
@@ -406,4 +406,4 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - **Lombok Download:** https://projectlombok.org/download
 - **IntelliJ Lombok Plugin:** https://plugins.jetbrains.com/plugin/6317-lombok
 - **JUnit Workshop:** https://github.com/a-oleynik/junit-workshop
-- **Selenium Example (JUnit 6 branch):** https://github.com/a-oleynik/selenium-example/tree/junit6
+- **Selenium Example:** https://github.com/a-oleynik/selenium-example
