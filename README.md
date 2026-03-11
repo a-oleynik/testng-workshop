@@ -13,7 +13,7 @@
 >
 > **Related projects:**
 > - 🧪 [JUnit Workshop](https://github.com/a-oleynik/junit-workshop) — companion JUnit 6 examples to compare side-by-side with this repo
-> - 🌐 [Selenium Example (JUnit 6 branch)](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world Selenium WebDriver framework built on top of JUnit 6
+> - 🌐 [Selenium Example](https://github.com/a-oleynik/selenium-example) — real-world Selenium WebDriver framework built on top of TestNG
 
 ---
 
@@ -393,6 +393,7 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - [Maven Surefire Report Plugin](https://maven.apache.org/surefire/maven-surefire-report-plugin/)
 - [JUnit Workshop](https://github.com/a-oleynik/junit-workshop) — companion JUnit 6 examples
 - [Selenium Example](https://github.com/a-oleynik/selenium-example) — real-world Selenium framework using TestNG
+- [TestNG XML Is a Legacy Concept: Here's What Modern Test Suites Should Look Like](https://medium.com/@andrei.oleynik/testng-xml-is-a-legacy-concept-heres-what-modern-test-suites-should-look-like-bd5cb380db61) — article on modern TestNG suite configuration
 
 ---
 
@@ -403,5 +404,3 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - **TestNG Releases:** https://github.com/testng-team/testng/releases
 - **Lombok Download:** https://projectlombok.org/download
 - **IntelliJ Lombok Plugin:** https://plugins.jetbrains.com/plugin/6317-lombok
-- **JUnit Workshop:** https://github.com/a-oleynik/junit-workshop
-- **Selenium Example:** https://github.com/a-oleynik/selenium-example
