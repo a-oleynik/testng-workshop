@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+    Suite XML demonstrating all three strategies for suite-scoped setup / teardown:
+
+      1. @BeforeSuite / @AfterSuite annotations  → SuiteAnnotationsTest
+      2. ISuiteListener (MySuiteListener)         → SuiteListenerTest
+      3. IExecutionListener (MyExecutionListener) → ExecutionListenerTest
+
+    IExecutionListener MUST be registered here in the <listeners> block;
+    it cannot be attached via @Listeners on a test class.
+    ISuiteListener can be registered either way — here for global coverage.
+
+    Run with:
+        mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testngsuites.xml
+-->
+<suite name="SuitesDemo" parallel="none">
+
+    <listeners>
+        <listener class-name="com.oleynik.qa.workshop.testng.suites.MySuiteListener"/>
+        <listener class-name="com.oleynik.qa.workshop.testng.suites.MyExecutionListener"/>
+    </listeners>
+
+    <test name="Suite Lifecycle — Annotations">
+        <classes>
+            <class name="com.oleynik.qa.workshop.testng.suites.SuiteAnnotationsTest"/>
+            <class name="com.oleynik.qa.workshop.testng.suites.TestAnnotationsTest"/>
+        </classes>
+    </test>
+
+    <test name="Suite Lifecycle — Listeners">
+        <classes>
+            <class name="com.oleynik.qa.workshop.testng.suites.SuiteListenerTest"/>
+            <class name="com.oleynik.qa.workshop.testng.suites.ExecutionListenerTest"/>
+        </classes>
+    </test>
+
+</suite>
+

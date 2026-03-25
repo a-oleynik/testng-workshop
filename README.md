@@ -101,6 +101,10 @@ mvn clean test
 | `grouping`          | Groups (`@Test(groups = …)`), `@BeforeGroups`, `@AfterGroups`                             | `GroupTest`                                       |
 | `dependencies`      | Method & group dependencies (`dependsOnMethods`, `dependsOnGroups`)                       | `DependenciesTest`                                |
 | `execution/order`   | Test execution ordering via `priority` attribute                                          | `ExecutionOrderTest`                              |
+| `suites`            | Suite lifecycle annotations (`@BeforeSuite`, `@AfterSuite`)                               | `SuiteAnnotationsTest`                            |
+| `suites`            | Test-block lifecycle annotations (`@BeforeTest`, `@AfterTest`)                            | `TestAnnotationsTest`                             |
+| `suites`            | `ISuiteListener` — suite-scoped setup/teardown via listener                               | `SuiteListenerTest`                               |
+| `suites`            | `IExecutionListener` — process-wide execution lifecycle (XML registration only)           | `ExecutionListenerTest`                           |
 | `listeners`         | `ITestListener` — observe test start, success, failure, skip                              | `TestListenerTest`                                |
 | `listeners`         | `IInvokedMethodListener` — intercept before/after every method invocation                 | `MethodListenerTest`                              |
 | `retry`             | Retry with `IRetryAnalyzer` + custom `@Retries` annotation                                | `RetryTest`                                       |
@@ -119,28 +123,31 @@ Work through these topics in order; each builds on the previous one.
 2. **Test lifecycle** → `FixturesTest`  
    Understand the full TestNG fixture hierarchy: `@BeforeSuite` → `@BeforeTest` → `@BeforeClass` → `@BeforeMethod` (and their `After*` counterparts).
 
-3. **Exception testing** → `ExceptionTest`  
+3. **Suite & test-block lifecycle** → `SuiteAnnotationsTest`, `TestAnnotationsTest`  
+   See `@BeforeSuite` / `@AfterSuite` run once around the entire suite, and `@BeforeTest` / `@AfterTest` run once per `<test>` block in a `testng.xml` file.
+
+4. **Exception testing** → `ExceptionTest`  
    Use `expectedExceptions` and `expectedExceptionsMessageRegExp` on `@Test` to assert thrown exceptions.
 
-4. **Disabling & skipping tests** → `DisabledTest`  
+5. **Disabling & skipping tests** → `DisabledTest`  
    Disable tests with `@Test(enabled = false)` or skip them dynamically by throwing `SkipException`.
 
-5. **Test descriptions** → `DescriptionTest`  
+6. **Test descriptions** → `DescriptionTest`  
    Add human-readable descriptions to tests with `@Test(description = "…")` for better report output.
 
-6. **Hamcrest matchers** → `HamcrestTest`  
+7. **Hamcrest matchers** → `HamcrestTest`  
    Write expressive assertions with `assertThat`, `equalTo`, `is`, `closeTo`, `both…and`, and more.
 
-7. **Soft assertions** → `SoftAssertTest`  
+8. **Soft assertions** → `SoftAssertTest`  
    Collect all assertion failures with `SoftAssert` before reporting — no early bail-out.
 
-8. **Assumptions** → `AssumeTest`  
+9. **Assumptions** → `AssumeTest`  
    Skip tests dynamically when preconditions aren't met using AssertJ's `assumeThat`.
 
-9. **Parameterized tests** → `StaticDataProviderTest`  
-   Drive one test method with multiple data rows using an inline `@DataProvider`.
+10. **Parameterized tests** → `StaticDataProviderTest`  
+    Drive one test method with multiple data rows using an inline `@DataProvider`.
 
-10. **Groups** → `GroupTest`  
+11. **Groups** → `GroupTest`  
     Mark tests as `Smoke` or `Regression` and run subsets from the command line or via XML suites.
 
 **Run the whole beginner suite:**
@@ -155,7 +162,47 @@ mvn clean test
 
 These topics assume familiarity with TestNG basics.
 
-### 1. Groups, `@BeforeGroups` / `@AfterGroups`
+### 1. Suite Lifecycle — Annotations vs. Listeners
+
+`SuiteAnnotationsTest`, `TestAnnotationsTest`, `SuiteListenerTest`, `ExecutionListenerTest` → `suites/` package
+
+TestNG provides three strategies for running code at suite scope, from simplest to most powerful:
+
+| Strategy                       | Class                                           | When to use                                                     |
+|--------------------------------|-------------------------------------------------|-----------------------------------------------------------------|
+| `@BeforeSuite` / `@AfterSuite` | `SuiteAnnotationsTest`                          | Simplest option; lives inside a test class                      |
+| `ISuiteListener`               | `SuiteListenerTest` + `MySuiteListener`         | Infrastructure code outside the test hierarchy; fires per suite |
+| `IExecutionListener`           | `ExecutionListenerTest` + `MyExecutionListener` | Process-wide hook across all suites; must be registered in XML  |
+
+**Full fixture execution order:**
+```
+IExecutionListener.onExecutionStart()       ← once per JVM run
+  ISuiteListener.onStart(suite)             ← once per suite
+    @BeforeSuite                            ← annotation-based, once per suite
+      @BeforeTest                           ← once per <test> block in testng.xml
+        @BeforeClass                        ← once per test class
+          @BeforeMethod / @Test / @AfterMethod
+        @AfterClass
+      @AfterTest
+    @AfterSuite
+  ISuiteListener.onFinish(suite)
+IExecutionListener.onExecutionFinish()
+```
+
+> **JUnit 5 equivalent:** `@BeforeAll` / `@AfterAll` (annotation-based) or a custom extension
+> implementing `BeforeAllCallback` / `AfterAllCallback` (listener-based).
+
+**`@BeforeTest` / `@AfterTest`** (`TestAnnotationsTest`) fire once per `<test>` XML element — coarser than `@BeforeClass` but finer than `@BeforeSuite`. They are TestNG-specific and have no direct JUnit 5 counterpart.
+
+**`IExecutionListener`** cannot be registered via `@Listeners` on a test class — it must be in the `<listeners>` block of a `testng.xml`:
+
+Run the full suites demo:
+
+```bash
+mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testngsuites.xml
+```
+
+### 2. Groups, `@BeforeGroups` / `@AfterGroups`
 
 `GroupTest` → `grouping/` package  
 Assign tests to named groups. Use `@BeforeGroups` and `@AfterGroups` for group-scoped setup/teardown.  
@@ -175,19 +222,19 @@ mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testnggroups2.xml
 mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testnggroups1.xml
 ```
 
-### 2. Test Dependencies
+### 3. Test Dependencies
 
 `DependenciesTest` → `dependencies/` package  
 Chain tests so that a downstream test is skipped (not failed) when its upstream dependency fails, using `dependsOnMethods` or `dependsOnGroups`.
 
-### 3. CSV & External Data Providers
+### 4. CSV & External Data Providers
 
 `DynamicDataProviderTest`, `OuterDataProviderTest` → `ddt/` package  
 - Load test data lazily from CSV files via an `Iterator`-based `@DataProvider`.
 - Separate data-provider logic into a dedicated `MyDataProvider` class and reference it with `dataProviderClass`.
 - Use the custom `@DataSource(path = "…")` annotation to bind a CSV file path to a test method at runtime.
 
-### 4. Nested Test Classes
+### 5. Nested Test Classes
 
 `NestedTest` → `nested/` package  
 Group related scenarios (`Multiply`, `Divide`, `Add`) as public inner classes inside a parent class. Run them via `testnested.xml`:
@@ -196,12 +243,12 @@ Group related scenarios (`Multiply`, `Divide`, `Add`) as public inner classes in
 mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testnested.xml
 ```
 
-### 5. Test Execution Order
+### 6. Test Execution Order
 
 `ExecutionOrderTest` → `execution/order/` package  
 Control method execution order with the `priority` attribute on `@Test` (lower value = earlier execution). Methods without a priority run before prioritized ones.
 
-### 6. Listeners
+### 7. Listeners
 
 `TestListenerTest`, `MethodListenerTest` → `listeners/` package  
 - **`ITestListener`** (`MyTestListener`) — react to test start, success, failure, and skip events. Ideal for screenshot capture on failure.  
@@ -209,7 +256,7 @@ Control method execution order with the `priority` attribute on `@Test` (lower v
 - **`TestListenerAdapter`** (`MyExtendedTestListener`) — extend the adapter and override only the callbacks you need.  
 Attach listeners declaratively with `@Listeners(value = MyTestListener.class)` or globally via a `testng.xml` `<listeners>` block.
 
-### 7. Retry Strategies
+### 8. Retry Strategies
 
 `RetryTest` — `IRetryAnalyzer` + custom `@Retries(limit = N)` annotation applied per test method  
 `RetryTransformerTest` — `IAnnotationTransformer` (`RetryTransformer`) injects `RetryAnalyzer` globally for every test in the suite without touching test source code  
@@ -220,7 +267,7 @@ Run the transformer-based retry suite:
 mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testngretrylistener.xml
 ```
 
-### 8. Parallel Execution
+### 9. Parallel Execution
 
 Configured globally in `pom.xml` via Surefire:
 
@@ -231,18 +278,19 @@ Configured globally in `pom.xml` via Surefire:
 
 Tests run concurrently by default. Fine-tune parallelism per suite with `parallel="classes"` or `parallel="tests"` and a custom `thread-count` in any `testng.xml`.
 
-### 9. TestNG XML Suites
+### 10. TestNG XML Suites
 
 All suite XML files live in `src/test/resources/`. They demonstrate:
 
-| File                      | What it shows                                           |
-|---------------------------|---------------------------------------------------------|
-| `testng1.xml`             | Include / exclude specific test methods per class       |
-| `testng2.xml`             | Run a fixed set of classes in parallel                  |
-| `testnggroups1.xml`       | Groups-of-groups — combine named groups under one alias |
-| `testnggroups2.xml`       | Include only the `Smoke` group                          |
-| `testngretrylistener.xml` | Register `RetryTransformer` listener globally           |
-| `testnested.xml`          | Run all tests from a package (including inner classes)  |
+| File                      | What it shows                                                             |
+|---------------------------|---------------------------------------------------------------------------|
+| `testng1.xml`             | Include / exclude specific test methods per class                         |
+| `testng2.xml`             | Run a fixed set of classes in parallel                                    |
+| `testnggroups1.xml`       | Groups-of-groups — combine named groups under one alias                   |
+| `testnggroups2.xml`       | Include only the `Smoke` group                                            |
+| `testngretrylistener.xml` | Register `RetryTransformer` listener globally                             |
+| `testnested.xml`          | Run all tests from a package (including inner classes)                    |
+| `testngsuites.xml`        | `ISuiteListener` + `IExecutionListener` + suite lifecycle annotations     |
 
 Run any suite directly:
 
@@ -250,7 +298,7 @@ Run any suite directly:
 mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testng1.xml
 ```
 
-### 10. Surefire HTML Report Generation
+### 11. Surefire HTML Report Generation
 
 ```bash
 mvn clean surefire-report:report
@@ -356,6 +404,7 @@ src/
 │   ├── annotations/     # Custom annotations (@Retries, @DataSource)
 │   ├── dataproviders/   # Reusable data provider (MyDataProvider)
 │   ├── listeners/       # ITestListener, IInvokedMethodListener, IAnnotationTransformer
+│   ├── suites/          # ISuiteListener (MySuiteListener), IExecutionListener (MyExecutionListener)
 │   ├── retry/           # IRetryAnalyzer implementation (RetryAnalyzer)
 │   ├── Factorial.java   # Utility class used by data-driven tests
 │   └── Utils.java       # Shared test utilities (e.g. waitFor)
@@ -369,6 +418,8 @@ src/
     ├── dependencies/    # Test dependencies (dependsOnMethods / dependsOnGroups)
     ├── execution/order/ # Test execution ordering (priority)
     ├── listeners/       # Tests demonstrating listener hooks
+    ├── suites/          # Suite lifecycle: @BeforeSuite/@AfterSuite, @BeforeTest/@AfterTest,
+    │                    #   ISuiteListener, IExecutionListener
     ├── retry/           # Retry strategies (IRetryAnalyzer, IAnnotationTransformer)
     └── repeat/          # Repeated execution (invocationCount)
 ```
