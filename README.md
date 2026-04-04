@@ -453,7 +453,8 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - [OpenCSV Documentation](https://opencsv.sourceforge.net/)
 - [Maven Surefire Plugin](https://maven.apache.org/surefire/maven-surefire-plugin/)
 - [Maven Surefire Report Plugin](https://maven.apache.org/surefire/maven-surefire-report-plugin/)
-- [JUnit Workshop](https://github.com/a-oleynik/junit-workshop) — companion JUnit 6 examples
+- [Maven Wrapper](https://maven.apache.org/wrapper/) — run Maven without a local installation
+- [JUnit Workshop](https://github.com/a-oleynik/junit-workshop) — companion JUnit 6 examples (there are also branches with JUnit 5 & 4)
 - [Selenium Example](https://github.com/a-oleynik/selenium-example) — real-world Selenium framework using TestNG
 - [TestNG XML Is a Legacy Concept: Here's What Modern Test Suites Should Look Like](https://medium.com/@andrei.oleynik/testng-xml-is-a-legacy-concept-heres-what-modern-test-suites-should-look-like-bd5cb380db61) — article on modern TestNG suite configuration
 
@@ -461,8 +462,9 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 
 ## 🔗 Useful Links
 
-- **Java Download:** https://www.oracle.com/java/technologies/downloads/
-- **Maven Download:** https://maven.apache.org/download.cgi
-- **TestNG Releases:** https://github.com/testng-team/testng/releases
-- **Lombok Download:** https://projectlombok.org/download
-- **IntelliJ Lombok Plugin:** https://plugins.jetbrains.com/plugin/6317-lombok
+- [**Java Download**](https://www.oracle.com/java/technologies/downloads/)
+- [**Maven Download**](https://maven.apache.org/download.cgi)
+- [**TestNG Releases**](https://github.com/testng-team/testng/releases)
+- [**JUnit 6 Released — Clean-Up, Modernization & Minimal Disruption**](https://medium.com/@andrei.oleynik/junit-6-released-clean-up-modernization-minimal-disruption-d3ecf11b64ad)
+- [**Lombok Download**](https://projectlombok.org/download)
+- [**IntelliJ Lombok Plugin**](https://plugins.jetbrains.com/plugin/6317-lombok)
