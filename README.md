@@ -15,10 +15,14 @@
 > - 🧪 [JUnit Workshop](https://github.com/a-oleynik/junit-workshop) — companion JUnit 6 examples to compare side-by-side with this repo
 > - 🌐 [Selenium Example](https://github.com/a-oleynik/selenium-example) — real-world Selenium WebDriver framework built on top of TestNG
 
+Hands-on examples for **TestNG 7** in Java — covering every major feature from basic assertions to advanced suite orchestration, listeners, data providers, retry strategies, and parallel execution.  
+Use it as a practical reference, a workshop starter kit, or a side-by-side comparison with the companion [JUnit Workshop](https://github.com/a-oleynik/junit-workshop).
+
 ---
 
 ## 📋 Table of Contents
 
+- [Why this repository?](#-why-this-repository)
 - [Who Is This For?](#-who-is-this-for)
 - [Prerequisites](#-prerequisites)
 - [Quick Start](#-quick-start)
@@ -31,6 +35,23 @@
 - [License](#-license)
 - [Additional Resources](#-additional-resources)
 - [Useful Links](#-useful-links)
+- [Found it useful?](#-found-it-useful)
+
+---
+
+## 🤔 Why this repository?
+
+Most TestNG tutorials stop at annotations and `@DataProvider`.  
+This project goes further — it covers the **full TestNG 7 feature set** with real, runnable code you can clone, execute, and adapt immediately.
+
+Use this repository if you want to:
+
+- **learn TestNG from scratch** with a structured, step-by-step learning path
+- **see real runnable examples** instead of reading documentation only
+- **explore advanced features** — listeners (`ITestListener`, `ISuiteListener`, `IExecutionListener`), retry strategies, parallel execution, XML suites, groups, and data providers
+- **understand suite orchestration** — `@BeforeSuite`, `@BeforeTest`, `ISuiteListener`, and when to use each
+- **compare TestNG and JUnit** patterns and idioms side-by-side with the companion [JUnit Workshop](https://github.com/a-oleynik/junit-workshop)
+- **use it as material** for workshops, tech talks, onboarding sessions, and self-study
 
 ---
 
@@ -468,3 +489,10 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - [**JUnit 6 Released — Clean-Up, Modernization & Minimal Disruption**](https://medium.com/@andrei.oleynik/junit-6-released-clean-up-modernization-minimal-disruption-d3ecf11b64ad)
 - [**Lombok Download**](https://projectlombok.org/download)
 - [**IntelliJ Lombok Plugin**](https://plugins.jetbrains.com/plugin/6317-lombok)
+
+---
+
+## ⭐ Found it useful?
+
+If you found useful examples or information in this repository, please give it a ⭐  
+Your support helps the project reach more Java and QA engineers.
