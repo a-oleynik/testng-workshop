@@ -47,12 +47,23 @@
 
 ## 📦 Prerequisites
 
-| Tool              | Minimum version                 | Notes                                   |
-|-------------------|---------------------------------|-----------------------------------------|
-| **JDK**           | 21 LTS                          |                                         |
-| **Maven**         | 3.9+                            |                                         |
-| **IDE**           | Any (IntelliJ IDEA recommended) | Lombok plugin required for IDE support  |
-| **Lombok plugin** | Latest                          | IntelliJ: *Settings → Plugins → Lombok* |
+| Tool              | Minimum version                   | Notes                                                     |
+|-------------------|-----------------------------------|-----------------------------------------------------------|
+| **JDK**           | 21 LTS                            |                                                           |
+| **Maven**         | 3.9+ *(optional but recommended)* | Not required if using the included Maven Wrapper (`mvnw`) |
+| **IDE**           | Any (IntelliJ IDEA recommended)   | Lombok plugin required for IDE support                    |
+| **Lombok plugin** | Latest                            | IntelliJ: *Settings → Plugins → Lombok*                   |
+
+> 💡 **Maven Wrapper included** — this project ships with `mvnw` (Linux/macOS) and `mvnw.cmd` (Windows).  
+> You can use it instead of a locally installed Maven. The wrapper automatically downloads the correct Maven version on first run.
+>
+> ```bash
+> # Linux / macOS
+> ./mvnw clean test
+>
+> # Windows
+> mvnw.cmd clean test
+> ```
 
 ---
 
