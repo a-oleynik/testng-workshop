@@ -22,20 +22,29 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 
 ## 📋 Table of Contents
 
+- [Found it useful?](#-found-it-useful)
 - [Why this repository?](#-why-this-repository)
 - [Who Is This For?](#-who-is-this-for)
-- [Prerequisites](#-prerequisites)
 - [Quick Start](#-quick-start)
+- [Prerequisites](#-prerequisites)
 - [Supported Versions](#-supported-versions)
 - [Feature Map](#-feature-map)
 - [Learning Path — Beginners](#-learning-path--beginners)
 - [Advanced Topics — Path for Senior Engineers](#-advanced-topics--path-for-senior-engineers)
 - [Command Examples](#-command-examples)
 - [Project Structure](#-project-structure)
-- [License](#-license)
 - [Additional Resources](#-additional-resources)
 - [Useful Links](#-useful-links)
-- [Found it useful?](#-found-it-useful)
+- [License](#-license)
+
+---
+
+## ⭐ Found it useful?
+
+If you found useful examples or information in this repository, please give it a ⭐  
+Your support helps the project reach more Java and QA engineers.
+
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -53,6 +62,8 @@ Use this repository if you want to:
 - **compare TestNG and JUnit** patterns and idioms side-by-side with the companion [JUnit Workshop](https://github.com/a-oleynik/junit-workshop)
 - **use it as material** for workshops, tech talks, onboarding sessions, and self-study
 
+[⬆ Back to Table of Contents](#-table-of-contents)
+
 ---
 
 ## 👥 Who Is This For?
@@ -63,6 +74,20 @@ Use this repository if you want to:
 | **Java developers** migrating from JUnit 4 / JUnit 5+ | Side-by-side comparison of patterns and idioms                                  |
 | **Senior / lead engineers**                           | Deep-dives into listeners, retry strategies, parallel execution, and groups     |
 | **Workshop facilitators**                             | A ready-made project you can hand to attendees                                  |
+
+[⬆ Back to Table of Contents](#-table-of-contents)
+
+---
+
+## 🚀 Quick Start
+
+```bash
+git clone https://github.com/a-oleynik/testng-workshop.git
+cd testng-workshop
+mvn clean test
+```
+
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -86,15 +111,7 @@ Use this repository if you want to:
 > mvnw.cmd clean test
 > ```
 
----
-
-## 🚀 Quick Start
-
-```bash
-git clone https://github.com/a-oleynik/testng-workshop.git
-cd testng-workshop
-mvn clean test
-```
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -109,6 +126,8 @@ mvn clean test
 | OpenCSV              | `5.12.0`     |
 | SLF4J                | `2.0.17`     |
 | Java source / target | `21`         |
+
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -142,6 +161,8 @@ mvn clean test
 | `retry`             | Retry with `IRetryAnalyzer` + custom `@Retries` annotation                                | `RetryTest`                                       |
 | `retry`             | Retry with `IAnnotationTransformer` (`RetryTransformer`) applied globally via XML         | `RetryTransformerTest`                            |
 | `repeat`            | Repeated execution (`invocationCount` attribute on `@Test`)                               | `RepeatedTest`                                    |
+
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -187,6 +208,8 @@ Work through these topics in order; each builds on the previous one.
 ```bash
 mvn clean test
 ```
+
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -340,6 +363,8 @@ mvn clean site
 
 > Reports are written to `target/site/surefire-report.html`
 
+[⬆ Back to Table of Contents](#-table-of-contents)
+
 ---
 
 ## 💻 Command Examples
@@ -425,6 +450,8 @@ mvn clean surefire-report:report
 mvn clean test -X
 ```
 
+[⬆ Back to Table of Contents](#-table-of-contents)
+
 ---
 
 ## 📁 Project Structure
@@ -456,11 +483,7 @@ src/
     └── repeat/          # Repeated execution (invocationCount)
 ```
 
----
-
-## 📝 License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -479,6 +502,8 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - [Selenium Example](https://github.com/a-oleynik/selenium-example) — real-world Selenium framework using TestNG
 - [TestNG XML Is a Legacy Concept: Here's What Modern Test Suites Should Look Like](https://medium.com/@andrei.oleynik/testng-xml-is-a-legacy-concept-heres-what-modern-test-suites-should-look-like-bd5cb380db61) — article on modern TestNG suite configuration
 
+[⬆ Back to Table of Contents](#-table-of-contents)
+
 ---
 
 ## 🔗 Useful Links
@@ -490,9 +515,14 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - [**Lombok Download**](https://projectlombok.org/download)
 - [**IntelliJ Lombok Plugin**](https://plugins.jetbrains.com/plugin/6317-lombok)
 
+[⬆ Back to Table of Contents](#-table-of-contents)
+
 ---
 
-## ⭐ Found it useful?
+## 📝 License
 
-If you found useful examples or information in this repository, please give it a ⭐  
-Your support helps the project reach more Java and QA engineers.
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+
+[⬆ Back to Table of Contents](#-table-of-contents)
+
+---
