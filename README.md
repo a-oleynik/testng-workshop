@@ -140,6 +140,8 @@ mvn clean test
 
 ## 🌍 Feature Map
 
+> 💡 **New to TestNG?** Follow the [Learning Path](#-learning-path--beginners) for a recommended study order.
+
 | Package / folder  | Feature demonstrated                                                                                                                       | Test class(es)            |
 |-------------------|--------------------------------------------------------------------------------------------------------------------------------------------|---------------------------|
 | `general`         | Basic assertions (`assertEquals`, `assertTrue`, `assertNull`, `assertSame`, …)                                                             | `AssertTest`              |
@@ -184,32 +186,32 @@ Work through these topics in order; each builds on the previous one.
 2. **Test lifecycle** → `FixturesTest`  
    Understand the full TestNG fixture hierarchy: `@BeforeSuite` → `@BeforeTest` → `@BeforeClass` → `@BeforeMethod` (and their `After*` counterparts).
 
-3. **Suite & test-block lifecycle** → `SuiteAnnotationsTest`, `TestAnnotationsTest`  
-   See `@BeforeSuite` / `@AfterSuite` run once around the entire suite, and `@BeforeTest` / `@AfterTest` run once per `<test>` block in a `testng.xml` file.
-
-4. **Exception testing** → `ExceptionTest`  
+3. **Exception testing** → `ExceptionTest`  
    Use `expectedExceptions` and `expectedExceptionsMessageRegExp` on `@Test` to assert thrown exceptions.
 
-5. **Disabling & skipping tests** → `DisabledTest`  
+4. **Disabling & skipping tests** → `DisabledTest`  
    Disable tests with `@Test(enabled = false)` or skip them dynamically by throwing `SkipException`.
 
-6. **Test descriptions** → `DescriptionTest`  
+5. **Test descriptions** → `DescriptionTest`  
    Add human-readable descriptions to tests with `@Test(description = "…")` for better report output.
 
-7. **Hamcrest matchers** → `HamcrestTest`  
+6. **Hamcrest matchers** → `HamcrestTest`  
    Write expressive assertions with `assertThat`, `equalTo`, `is`, `closeTo`, `both…and`, and more.
 
-8. **Soft assertions** → `SoftAssertTest`  
+7. **Soft assertions** → `SoftAssertTest`  
    Collect all assertion failures with `SoftAssert` before reporting — no early bail-out.
 
-9. **Assumptions** → `AssumeTest`  
+8. **Assumptions** → `AssumeTest`  
    Skip tests dynamically when preconditions aren't met using AssertJ's `assumeThat`.
 
-10. **Parameterized tests** → `StaticDataProviderTest`  
-    Drive one test method with multiple data rows using an inline `@DataProvider`.
+9. **Parameterized tests** → `StaticDataProviderTest`  
+   Drive one test method with multiple data rows using an inline `@DataProvider`.
 
-11. **Groups** → `GroupTest`  
+10. **Groups** → `GroupTest`  
     Mark tests as `Smoke` or `Regression` and run subsets from the command line or via XML suites.
+
+11. **Suite & test-block lifecycle** → `SuiteAnnotationsTest`, `TestAnnotationsTest`  
+    See `@BeforeSuite` / `@AfterSuite` run once around the entire suite, and `@BeforeTest` / `@AfterTest` run once per `<test>` block in a `testng.xml` file. Having seen XML suites in step 10, the distinction between `@BeforeTest` and `@BeforeClass` now makes full sense — and this topic bridges directly into the Advanced Topics section.
 
 **Run the whole beginner suite:**
 
