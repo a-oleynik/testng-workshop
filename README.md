@@ -35,6 +35,7 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 - [Project Structure](#-project-structure)
 - [Additional Resources](#-additional-resources)
 - [Useful Links](#-useful-links)
+- [AI Assistants](#-ai-assistants)
 - [License](#-license)
 
 ---
@@ -538,6 +539,28 @@ src/
 - [**JUnit 6 Released — Clean-Up, Modernization & Minimal Disruption**](https://medium.com/@andrei.oleynik/junit-6-released-clean-up-modernization-minimal-disruption-d3ecf11b64ad)
 - [**Lombok Download**](https://projectlombok.org/download)
 - [**IntelliJ Lombok Plugin**](https://plugins.jetbrains.com/plugin/6317-lombok)
+
+[⬆ Back to Table of Contents](#-table-of-contents)
+
+---
+
+## 🤖 AI Assistants
+
+This project ships configuration files for AI coding assistants so they have full context about the tech stack, package layout, coding conventions, and TestNG-specific rules.
+
+| Assistant                                   | File                                                                 | Description                                                                                 |
+|---------------------------------------------|----------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| **GitHub Copilot**                          | [`.github/copilot-instructions.md`](.github/copilot-instructions.md) | Custom instructions — project overview, conventions, key patterns, what NOT to do           |
+| **JetBrains Junie**                         | [`.junie/guidelines.md`](.junie/guidelines.md)                       | Project guidelines — full source layout, naming rules, threading constraints, learning path |
+| **OpenAI Codex / Claude Code / Gemini CLI** | [`AGENTS.md`](AGENTS.md)                                             | Agentic guidance — build & verify commands, feature index, common patterns, important rules |
+
+All files cover:
+- Full tech stack and versions
+- `src/main` and `src/test` package breakdown with class inventory
+- Naming conventions (`snake_case` test methods, `PascalCase` classes)
+- TestNG-specific rules (e.g. `IExecutionListener` must be registered in XML, not via `@Listeners`)
+- Thread-safety constraints (`parallel=methods`, `threadCount=3` enabled by default)
+- All run commands including Maven Wrapper
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
