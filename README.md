@@ -498,11 +498,12 @@ Triggered manually from **Actions → Run workflow** on GitHub.
 | `regression` | Regression — all tests | Always                                | `./mvnw -B clean test`                   |
 | `by-group`   | By group — `{groups}`  | Only when `groups` input is filled in | `./mvnw -B clean test -Dgroups={groups}` |
 
-Each job uploads a TestNG HTML report after completion — including on failure (`if: always()`):
+Each job uploads two artifacts after completion — including on failure (`if: always()`):
 
-| Artifact                                         | Source path                | Contents                                                                |
-|--------------------------------------------------|----------------------------|-------------------------------------------------------------------------|
-| `testng-reports` / `testng-reports-{groups}`     | `target/surefire-reports/` | Full HTML report — open `index.html` in a browser                       |
+| Artifact                                           | Source path                | Contents                                                                |
+|----------------------------------------------------|----------------------------|-------------------------------------------------------------------------|
+| `testng-reports` / `testng-reports-{groups}`       | `target/surefire-reports/` | Full HTML report — open `index.html` in a browser                       |
+| `junit-xml-results` / `junit-xml-results-{groups}` | `target/surefire-reports/` | Raw JUnit XML files — compatible with CI dashboards and report parsers  |
 
 ### How to trigger
 
@@ -515,8 +516,8 @@ Each job uploads a TestNG HTML report after completion — including on failure 
 ### Downloading the reports
 
 1. Click the completed workflow run
-2. Scroll to **Artifacts** → download **`testng-reports`**
-3. Open `index.html` in a browser
+2. Scroll to **Artifacts** → download **`testng-reports`** (HTML) or **`junit-xml-results`** (XML)
+3. Open `index.html` (from the TestNG report) in a browser
 
 ### Generating the report locally
 

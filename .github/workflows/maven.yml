@@ -29,6 +29,13 @@ jobs:
           name: testng-reports
           path: target/surefire-reports/
           retention-days: 14
+      - name: Upload JUnit XML results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-xml-results
+          path: target/surefire-reports/
+          retention-days: 14
   by-group:
     name: By group — ${{ inputs.groups }}
     runs-on: ubuntu-latest
@@ -50,5 +57,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: testng-reports-${{ inputs.groups }}
+          path: target/surefire-reports/
+          retention-days: 14
+      - name: Upload JUnit XML results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-xml-results-${{ inputs.groups }}
           path: target/surefire-reports/
           retention-days: 14
