@@ -120,6 +120,55 @@ mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testng1.xml
 mvnw.cmd clean test      # Windows
 ```
 
+## Task Recipes
+
+### Add a new test class
+
+1. Identify the correct package under `src/test/java/com/oleynik/qa/workshop/testng/` (see Key TestNG Patterns above).
+2. Create `<FeatureName>Test.java` — `PascalCase` + `Test` suffix.
+3. Use `org.testng.Assert` for assertions (`assertEquals`, `assertTrue`, `assertNull`, …).  
+   Use `AssertJ assertThat(...)` **only** in `HamcrestTest` / assumption tests. Do not mix libraries in one class.
+4. Name test methods in `snake_case` ending with `_test`, e.g. `assert_equals_multiplication_test`.
+5. Do **not** add `public` to test methods — TestNG does not require it.
+6. Verify: `mvn clean test -Dtest=<ClassName>`.
+
+### Add a new data-driven test
+
+1. Inline `@DataProvider`: add `@DataProvider(name = "…")` method and `Object[][]` rows in the same class.
+2. CSV-based: add rows to `src/test/resources/numbers.csv`, use `DynamicDataProviderTest` as reference.
+3. External provider: annotate with `@Test(dataProvider = "myData", dataProviderClass = MyDataProvider.class)`.
+4. Verify: `mvn clean test -Dtest=<ClassName>`.
+
+### Add a new listener
+
+1. Create the listener class in `src/main/java/com/oleynik/qa/workshop/testng/listeners/` (no `Test` suffix).
+2. Implement the appropriate TestNG interface:
+   - `ITestListener` — test start / success / failure / skip events
+   - `IInvokedMethodListener` — intercept every method invocation
+   - `TestListenerAdapter` — extend and override only the callbacks you need
+   - `IAnnotationTransformer` — transform annotations at runtime (e.g. inject retry)
+3. Register via `@Listeners(value = MyListener.class)` on the test class **or** add to the `<listeners>` block of a `testng.xml`.
+4. **Critical exception**: `IExecutionListener` must be registered in `testng.xml` only — `@Listeners` is silently ignored for this interface.
+
+### Add a retry test (per-method)
+
+```java
+@Test(retryAnalyzer = RetryAnalyzer.class)
+@Retries(limit = 3)
+void my_retry_test() { ... }
+```
+`RetryAnalyzer` reads `@Retries` via reflection — no further wiring required.
+
+### Apply retry globally via transformer
+
+Register `RetryTransformer` in `testngretrylistener.xml`:
+```xml
+<listeners>
+    <listener class-name="com.oleynik.qa.workshop.testng.listeners.RetryTransformer"/>
+</listeners>
+```
+Run: `mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testngretrylistener.xml`
+
 ## What NOT to Do
 
 - Do not add JUnit 5 annotations (`@org.junit.jupiter.api.Test`) — this project uses TestNG only.

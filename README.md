@@ -539,12 +539,11 @@ mvn clean test -Dgroups=Regression
 
 This project ships configuration files for AI coding assistants so they have full context about the tech stack, package layout, coding conventions, and TestNG-specific rules.
 
-| Assistant                                   | File                                                                 | Description                                                                                    |
-|---------------------------------------------|----------------------------------------------------------------------|------------------------------------------------------------------------------------------------|
-| **GitHub Copilot** (chat / completions)     | [`.github/copilot-instructions.md`](.github/copilot-instructions.md) | Always-on workspace instructions — project overview, conventions, key patterns, what NOT to do |
-| **GitHub Copilot** (agent mode)             | [`.github/agents.md`](.github/agents.md)                             | Agent-mode task recipes — how to add tests, listeners, retry strategies, run suites            |
-| **JetBrains Junie**                         | [`.junie/guidelines.md`](.junie/guidelines.md)                       | Project guidelines — full source layout, naming rules, threading constraints, learning path    |
-| **OpenAI Codex / Claude Code / Gemini CLI** | [`AGENTS.md`](AGENTS.md)                                             | Agentic guidance — build & verify commands, feature index, common patterns, important rules    |
+| Assistant                                            | File                                                                 | Description                                                                                                  |
+|------------------------------------------------------|----------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| **GitHub Copilot** (chat / completions / agent mode) | [`.github/copilot-instructions.md`](.github/copilot-instructions.md) | Always-on workspace instructions — project overview, conventions, key patterns, task recipes, what NOT to do |
+| **JetBrains Junie**                                  | [`.junie/guidelines.md`](.junie/guidelines.md)                       | Project guidelines — full source layout, naming rules, threading constraints, learning path                  |
+| **OpenAI Codex / Claude Code / Gemini CLI**          | [`AGENTS.md`](AGENTS.md)                                             | Agentic guidance — build & verify commands, feature index, common patterns, important rules                  |
 
 All files cover:
 - Full tech stack and versions
