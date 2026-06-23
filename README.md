@@ -1,4 +1,5 @@
 # TestNG 7 Workshop Examples
+[![Java CI with Maven](https://github.com/a-oleynik/testng-workshop/actions/workflows/maven.yml/badge.svg)](https://github.com/a-oleynik/testng-workshop/actions/workflows/maven.yml)
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
 [![Maven](https://img.shields.io/badge/Maven-3.9+-blue.svg)](https://maven.apache.org/)
 [![TestNG](https://img.shields.io/badge/TestNG-7.12.0-green.svg)](https://testng.org/)
