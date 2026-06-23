@@ -113,8 +113,8 @@ mvn clean test -Dgroups=Smoke,Regression
 ### Generate HTML report
 
 ```bash
-mvn clean surefire-report:report
-# Output: target/reports/surefire.html
+mvn clean test
+# Output: target/surefire-reports/index.html
 ```
 
 ---

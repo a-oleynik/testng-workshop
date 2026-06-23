@@ -1,0 +1,54 @@
+name: Java CI with Maven
+on:
+  workflow_dispatch:
+    inputs:
+      groups:
+        description: 'Group filter for the by-group job (e.g. Smoke, Regression). Leave empty to skip that job.'
+        required: false
+        default: ''
+jobs:
+  regression:
+    name: Regression — all tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+      - name: Run all tests
+        run: |
+          chmod +x mvnw
+          ./mvnw -B clean test
+      - name: Upload TestNG reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: testng-reports
+          path: target/surefire-reports/
+          retention-days: 14
+  by-group:
+    name: By group — ${{ inputs.groups }}
+    runs-on: ubuntu-latest
+    if: ${{ inputs.groups != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+      - name: Run tests for group '${{ inputs.groups }}'
+        run: |
+          chmod +x mvnw
+          ./mvnw -B clean test -Dgroups=${{ inputs.groups }}
+      - name: Upload TestNG reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: testng-reports-${{ inputs.groups }}
+          path: target/surefire-reports/
+          retention-days: 14

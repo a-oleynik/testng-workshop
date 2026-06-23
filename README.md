@@ -1,5 +1,4 @@
 # TestNG 7 Workshop Examples
-
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
 [![Maven](https://img.shields.io/badge/Maven-3.9+-blue.svg)](https://maven.apache.org/)
 [![TestNG](https://img.shields.io/badge/TestNG-7.12.0-green.svg)](https://testng.org/)
@@ -32,6 +31,7 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 - [Learning Path — Beginners](#-learning-path--beginners)
 - [Advanced Topics — Path for Senior Engineers](#-advanced-topics--path-for-senior-engineers)
 - [Command Examples](#-command-examples)
+- [CI / CD](#-ci--cd)
 - [AI Assistant Support](#-ai-assistant-support)
 - [Project Structure](#-project-structure)
 - [Additional Resources](#-additional-resources)
@@ -473,6 +473,60 @@ mvn clean surefire-report:report
 
 ```bash
 mvn clean test -X
+```
+
+[⬆ Back to Table of Contents](#-table-of-contents)
+
+---
+
+## 🚦 CI / CD
+
+This project uses **GitHub Actions** with a manually triggered workflow.
+
+### Workflow — `maven.yml`
+
+Triggered manually from **Actions → Run workflow** on GitHub.
+
+| Input    | Required | Description                                                                                   |
+|----------|----------|-----------------------------------------------------------------------------------------------|
+| `groups` | No       | Group filter for the by-group job (e.g. `Smoke`, `Regression`). Leave empty to skip that job. |
+
+### Jobs
+
+| Job          | Name                   | Runs when                             | Command                                  |
+|--------------|------------------------|---------------------------------------|------------------------------------------|
+| `regression` | Regression — all tests | Always                                | `./mvnw -B clean test`                   |
+| `by-group`   | By group — `{groups}`  | Only when `groups` input is filled in | `./mvnw -B clean test -Dgroups={groups}` |
+
+Each job uploads a TestNG HTML report after completion — including on failure (`if: always()`):
+
+| Artifact                                         | Source path                | Contents                                                                |
+|--------------------------------------------------|----------------------------|-------------------------------------------------------------------------|
+| `testng-reports` / `testng-reports-{groups}`     | `target/surefire-reports/` | Full HTML report — open `index.html` in a browser                       |
+
+### How to trigger
+
+1. Go to the **Actions** tab on GitHub
+2. Select **Java CI with Maven** in the left panel
+3. Click **Run workflow**
+4. Optionally fill in the **`groups`** field (e.g. `Smoke`) to also run the by-group job
+5. Click **Run workflow**
+
+### Downloading the reports
+
+1. Click the completed workflow run
+2. Scroll to **Artifacts** → download **`testng-reports`**
+3. Open `index.html` in a browser
+
+### Generating the report locally
+
+```bash
+# All tests
+mvn clean test
+
+# By group
+mvn clean test -Dgroups=Smoke
+mvn clean test -Dgroups=Regression
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)

@@ -33,6 +33,7 @@ mvn clean compile
 
 # Run all tests (parallel, threadCount=3)
 mvn clean test
+# → Reports: target/surefire-reports/index.html
 
 # Run a single class
 mvn clean test -Dtest=AssertTest
@@ -47,8 +48,8 @@ mvn clean test -Dgroups=Smoke,Regression
 mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testng1.xml
 
 # Generate HTML report
-mvn clean surefire-report:report
-# → target/site/surefire-report.html
+mvn clean test
+# → target/surefire-reports/index.html
 
 # Maven Wrapper (if Maven is not installed locally)
 ./mvnw clean test        # Linux / macOS

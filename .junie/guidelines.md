@@ -132,8 +132,8 @@ mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testngsuites.xml
 mvnw.cmd clean test      # Windows
 
 # HTML report
-mvn clean surefire-report:report
-# → target/site/surefire-report.html
+mvn clean test
+# → target/surefire-reports/index.html
 ```
 
 ---
