@@ -7,6 +7,8 @@
     <artifactId>testng-examples</artifactId>
     <version>2.0-SNAPSHOT</version>
     <name>TestNG 7 workshop examples</name>
+    <description>Hands-on reference project demonstrating every major TestNG 7 feature in Java 21. Companion code for the IT Talk "JUnit 6 vs TestNG 7".</description>
+    <url>https://github.com/a-oleynik/testng-workshop</url>
 
     <properties>
         <java.version>21</java.version>
