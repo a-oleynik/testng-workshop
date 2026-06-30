@@ -125,16 +125,16 @@ mvn clean test
 
 ## 🧩 Supported Versions
 
-| Library                    | Version used |
-|----------------------------|--------------|
-| TestNG                     | `7.12.0`     |
-| AssertJ                    | `3.27.7`     |
-| Hamcrest                   | `3.0`        |
-| Lombok                     | `1.18.46`    |
-| OpenCSV                    | `5.12.0`     |
-| SLF4J                      | `2.0.17`     |
-| Maven Surefire Plugin      | `3.5.6`      |
-| Java source / target       | `21`         |
+| Library               | Version used |
+|-----------------------|--------------|
+| TestNG                | `7.12.0`     |
+| AssertJ               | `3.27.7`     |
+| Hamcrest              | `3.0`        |
+| Lombok                | `1.18.46`    |
+| OpenCSV               | `5.12.0`     |
+| SLF4J                 | `2.0.17`     |
+| Maven Surefire Plugin | `3.5.6`      |
+| Java `--release`      | `21`         |
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
