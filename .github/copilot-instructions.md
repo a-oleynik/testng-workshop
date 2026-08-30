@@ -7,17 +7,17 @@ It is the companion code for the IT Talk _"JUnit 6 vs TestNG 7"_.
 
 ## Tech Stack
 
-| Tool / Library        | Version  |
-|-----------------------|----------|
-| Java                  | 21 LTS   |
-| TestNG                | 7.12.0   |
-| AssertJ               | 3.27.7   |
-| Hamcrest              | 3.0      |
-| Lombok                | 1.18.46  |
-| OpenCSV               | 5.12.0   |
-| SLF4J                 | 2.0.17   |
-| Maven Surefire Plugin | 3.5.6    |
-| Build tool            | Maven    |
+| Tool / Library        | Version |
+|-----------------------|---------|
+| Java                  | 21 LTS  |
+| TestNG                | 7.12.0  |
+| AssertJ               | 3.27.7  |
+| Hamcrest              | 3.0     |
+| Lombok                | 1.18.46 |
+| OpenCSV               | 5.12.0  |
+| SLF4J                 | 2.0.18  |
+| Maven Surefire Plugin | 3.5.6   |
+| Build tool            | Maven   |
 
 ## Project Structure
 

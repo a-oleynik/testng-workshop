@@ -18,7 +18,7 @@ Related project: [JUnit Workshop](https://github.com/a-oleynik/junit-workshop) f
 - **Hamcrest** 3.0 (test scope)
 - **Lombok** 1.18.46 (provided scope — annotation processor configured in `pom.xml`)
 - **OpenCSV** 5.12.0 (CSV-based data providers)
-- **SLF4J** 2.0.17
+- **SLF4J** 2.0.18
 - **Maven Surefire Plugin** 3.5.6
 - **Build**: Maven (wrapper included: `mvnw` / `mvnw.cmd`)
 

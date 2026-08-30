@@ -132,7 +132,7 @@ mvn clean test
 | Hamcrest              | `3.0`        |
 | Lombok                | `1.18.46`    |
 | OpenCSV               | `5.12.0`     |
-| SLF4J                 | `2.0.17`     |
+| SLF4J                 | `2.0.18`     |
 | Maven Surefire Plugin | `3.5.6`      |
 | Java `--release`      | `21`         |
 
