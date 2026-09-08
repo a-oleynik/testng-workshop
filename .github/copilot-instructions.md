@@ -13,10 +13,10 @@ It is the companion code for the IT Talk _"JUnit 6 vs TestNG 7"_.
 | TestNG                | 7.12.0  |
 | AssertJ               | 3.27.7  |
 | Hamcrest              | 3.0     |
-| Lombok                | 1.18.46 |
+| Lombok                | 1.18.48 |
 | OpenCSV               | 5.12.0  |
 | SLF4J                 | 2.0.18  |
-| Maven Surefire Plugin | 3.5.6   |
+| Maven Surefire Plugin | 3.6.0   |
 | Build tool            | Maven   |
 
 ## Project Structure
