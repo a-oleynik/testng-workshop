@@ -46,8 +46,6 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 If you found useful examples or information in this repository, please give it a ⭐  
 Your support helps the project reach more Java and QA engineers.
 
-[⬆ Back to Table of Contents](#-table-of-contents)
-
 ---
 
 ## 🤔 Why this repository?
@@ -604,6 +602,7 @@ src/
 - [JUnit Workshop](https://github.com/a-oleynik/junit-workshop) — companion JUnit 6 examples (there are also branches with JUnit 5 & 4)
 - [Selenium Example](https://github.com/a-oleynik/selenium-example) — real-world Selenium framework using TestNG
 - [TestNG XML Is a Legacy Concept: Here's What Modern Test Suites Should Look Like](https://medium.com/@andrei.oleynik/testng-xml-is-a-legacy-concept-heres-what-modern-test-suites-should-look-like-bd5cb380db61) — article on modern TestNG suite configuration
+- [Maven Surefire 3.6.0: What Happened to TestNG and testng.xml](https://medium.com/@andrei.oleynik/maven-surefire-3-6-0-what-happened-to-testng-and-testng-xml-ae5cb882d41a) — article about updates in Maven Surefire / Failsafe 3.6.0 connected with TestNG
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
@@ -615,6 +614,7 @@ src/
 - [**Maven Download**](https://maven.apache.org/download.cgi)
 - [**TestNG Releases**](https://github.com/testng-team/testng/releases)
 - [**JUnit 6 Released — Clean-Up, Modernization & Minimal Disruption**](https://medium.com/@andrei.oleynik/junit-6-released-clean-up-modernization-minimal-disruption-d3ecf11b64ad)
+- [**What Is a Test Fixture in JUnit, and Why Is @BeforeEach Not the Fixture?**](https://medium.com/@andrei.oleynik/what-is-a-test-fixture-in-junit-and-why-is-beforeeach-not-the-fixture-53f5c750270e)
 - [**Lombok Download**](https://projectlombok.org/download)
 - [**IntelliJ Lombok Plugin**](https://plugins.jetbrains.com/plugin/6317-lombok)
 
