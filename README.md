@@ -614,7 +614,7 @@ src/
 - [**Maven Download**](https://maven.apache.org/download.cgi)
 - [**TestNG Releases**](https://github.com/testng-team/testng/releases)
 - [**JUnit 6 Released — Clean-Up, Modernization & Minimal Disruption**](https://medium.com/@andrei.oleynik/junit-6-released-clean-up-modernization-minimal-disruption-d3ecf11b64ad)
-- [**What Is a Test Fixture in JUnit, and Why Is @BeforeEach Not the Fixture?**](https://medium.com/@andrei.oleynik/what-is-a-test-fixture-in-junit-and-why-is-beforeeach-not-the-fixture-53f5c750270e)
+- [**What Is a Test Fixture in JUnit, and Why Is @BeforeEach Not a Fixture?**](https://medium.com/@andrei.oleynik/what-is-a-test-fixture-in-junit-and-why-is-beforeeach-not-the-fixture-53f5c750270e)
 - [**Lombok Download**](https://projectlombok.org/download)
 - [**IntelliJ Lombok Plugin**](https://plugins.jetbrains.com/plugin/6317-lombok)
 
