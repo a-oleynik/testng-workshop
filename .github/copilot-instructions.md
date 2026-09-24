@@ -16,7 +16,7 @@ It is the companion code for the IT Talk _"JUnit 6 vs TestNG 7"_.
 | Lombok                | 1.18.48 |
 | OpenCSV               | 5.12.0  |
 | SLF4J                 | 2.0.18  |
-| Maven Surefire Plugin | 3.6.0   |
+| Maven Surefire Plugin | 3.5.6   |
 | Build tool            | Maven   |
 
 ## Project Structure

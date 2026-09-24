@@ -131,7 +131,7 @@ mvn clean test
 | Lombok                | `1.18.48`    |
 | OpenCSV               | `5.12.0`     |
 | SLF4J                 | `2.0.18`     |
-| Maven Surefire Plugin | `3.6.0`      |
+| Maven Surefire Plugin | `3.5.6`      |
 | Java `--release`      | `21`         |
 
 [⬆ Back to Table of Contents](#-table-of-contents)
