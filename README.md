@@ -601,7 +601,7 @@ src/
 - [Maven Wrapper](https://maven.apache.org/wrapper/) — run Maven without a local installation
 - [JUnit Workshop](https://github.com/a-oleynik/junit-workshop) — companion JUnit 6 examples (there are also branches with JUnit 5 & 4)
 - [Selenium Example](https://github.com/a-oleynik/selenium-example) — real-world Selenium framework using TestNG
-- [TestNG XML Is a Legacy Concept: Here's What Modern Test Suites Should Look Like](https://medium.com/@andrei.oleynik/testng-xml-is-a-legacy-concept-heres-what-modern-test-suites-should-look-like-bd5cb380db61) — article on modern TestNG suite configuration
+- [testng.xml Is Legacy. Here’s What Modern TestNG Suites Should Look Like](https://medium.com/@andrei.oleynik/testng-xml-is-a-legacy-concept-heres-what-modern-test-suites-should-look-like-bd5cb380db61) — article on modern TestNG suite configuration
 - [Maven Surefire 3.6.0: What Happened to TestNG and testng.xml](https://medium.com/@andrei.oleynik/maven-surefire-3-6-0-what-happened-to-testng-and-testng-xml-ae5cb882d41a) — article about updates in Maven Surefire / Failsafe 3.6.0 connected with TestNG
 
 [⬆ Back to Table of Contents](#-table-of-contents)
