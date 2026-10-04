@@ -99,10 +99,14 @@ mvn clean test
 
 ## 📦 Prerequisites
 
+> 💡 **Need help setting up your environment?**  
+> Check the comprehensive [Java, Maven & Gradle Setup Guide (Windows, macOS, Ubuntu)](https://medium.com/@andrei.oleynik/how-to-install-and-set-up-java-on-windows-macos-and-ubuntu-jdk-maven-and-gradle-728a732dd123) covering JDK installation, `JAVA_HOME` configuration, build tools setup, and troubleshooting.
+
 | Tool              | Minimum version                   | Notes                                                     |
 |-------------------|-----------------------------------|-----------------------------------------------------------|
 | **JDK**           | 21 LTS                            |                                                           |
 | **Maven**         | 3.9+ *(optional but recommended)* | Not required if using the included Maven Wrapper (`mvnw`) |
+| **Git**           | 2.x+ *(optional)*                 | For cloning and managing repository revisions             |
 | **IDE**           | Any (IntelliJ IDEA recommended)   | Lombok plugin required for IDE support                    |
 | **Lombok plugin** | Latest                            | IntelliJ: *Settings → Plugins → Lombok*                   |
 
@@ -604,6 +608,7 @@ src/
 - [testng.xml Is Legacy. Here’s What Modern TestNG Suites Should Look Like](https://medium.com/@andrei.oleynik/testng-xml-is-a-legacy-concept-heres-what-modern-test-suites-should-look-like-bd5cb380db61) — article on modern TestNG suite configuration
 - [Maven Surefire 3.6.0: What Happened to TestNG and testng.xml](https://medium.com/@andrei.oleynik/maven-surefire-3-6-0-what-happened-to-testng-and-testng-xml-ae5cb882d41a) — article about updates in Maven Surefire / Failsafe 3.6.0 connected with TestNG
 - [Maven Wrapper: Why You Need It and How to Use It](https://medium.com/@andrei.oleynik/maven-wrapper-why-you-need-it-and-how-to-use-it-bfa7619078b6) — article about Maven Wrapper and how to use it in your project
+- [How to Install and Set Up Java on Windows, macOS, and Ubuntu: JDK, Maven, and Gradle](https://medium.com/@andrei.oleynik/how-to-install-and-set-up-java-on-windows-macos-and-ubuntu-jdk-maven-and-gradle-728a732dd123) — comprehensive setup guide for JDK, Maven, and Gradle on all major OS
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
