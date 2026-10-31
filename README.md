@@ -168,7 +168,7 @@ mvn clean test
 | `suites`          | Suite lifecycle annotations (`@BeforeSuite`, `@AfterSuite`)                                                                                | `SuiteAnnotationsTest`    |
 | `suites`          | Test-block lifecycle annotations (`@BeforeTest`, `@AfterTest`)                                                                             | `TestAnnotationsTest`     |
 | `suites`          | `ISuiteListener` — suite-scoped setup/teardown via listener                                                                                | `SuiteListenerTest`       |
-| `suites`          | `IExecutionListener` — process-wide execution lifecycle (XML registration only)                                                            | `ExecutionListenerTest`   |
+| `suites`          | `IExecutionListener` — execution-wide lifecycle (registrable via `@Listeners`, XML, or `ServiceLoader`)                                    | `ExecutionListenerTest`   |
 | `listeners`       | `ITestListener` — observe test start, success, failure, skip                                                                               | `TestListenerTest`        |
 | `listeners`       | `IInvokedMethodListener` — intercept before/after every method invocation                                                                  | `MethodListenerTest`      |
 | `listeners`       | `TestListenerAdapter` — extend the adapter and override only the callbacks you need                                                        | `TestListenerTest`        |
@@ -241,11 +241,11 @@ TestNG provides three strategies for running code at suite scope, from simplest 
 |--------------------------------|-------------------------------------------------|-----------------------------------------------------------------|
 | `@BeforeSuite` / `@AfterSuite` | `SuiteAnnotationsTest`                          | Simplest option; lives inside a test class                      |
 | `ISuiteListener`               | `SuiteListenerTest` + `MySuiteListener`         | Infrastructure code outside the test hierarchy; fires per suite |
-| `IExecutionListener`           | `ExecutionListenerTest` + `MyExecutionListener` | Process-wide hook across all suites; must be registered in XML  |
+| `IExecutionListener`           | `ExecutionListenerTest` + `MyExecutionListener` | Fires once per TestNG execution, across all its suites; registrable via `@Listeners`, XML, or `ServiceLoader` |
 
 **Full fixture execution order:**
 ```
-IExecutionListener.onExecutionStart()       ← once per JVM run
+IExecutionListener.onExecutionStart()       ← once per TestNG execution
   ISuiteListener.onStart(suite)             ← once per suite
     @BeforeSuite                            ← annotation-based, once per suite
       @BeforeTest                           ← once per <test> block in testng.xml
@@ -263,7 +263,7 @@ IExecutionListener.onExecutionFinish()
 
 **`@BeforeTest` / `@AfterTest`** (`TestAnnotationsTest`) fire once per `<test>` XML element — coarser than `@BeforeClass` but finer than `@BeforeSuite`. They are TestNG-specific and have no direct JUnit 5 counterpart.
 
-**`IExecutionListener`** cannot be registered via `@Listeners` on a test class — it must be in the `<listeners>` block of a `testng.xml`:
+**`IExecutionListener`** extends `ITestNGListener`, so it can be registered via `@Listeners` on a test class, in the `<listeners>` block of a `testng.xml`, or auto-detected via `ServiceLoader`. The "XML only, `@Listeners` is ignored" restriction applies to `IAnnotationTransformer`, not to `IExecutionListener`. This Workshop uses XML registration for `MyExecutionListener` so it reliably wraps every suite in the demo run:
 
 ```xml
 <suite name="SuitesDemo" parallel="none">
@@ -551,7 +551,7 @@ All files cover:
 - Full tech stack and versions
 - `src/main` and `src/test` package breakdown with class inventory
 - Naming conventions (`snake_case` test methods, `PascalCase` classes)
-- TestNG-specific rules (e.g. `IExecutionListener` must be registered in XML, not via `@Listeners`)
+- TestNG-specific rules (e.g. `IExecutionListener` can be registered via `@Listeners`, XML, or `ServiceLoader` — unlike `IAnnotationTransformer`, which requires XML)
 - Thread-safety constraints (`parallel=methods`, `threadCount=3` enabled by default)
 - All run commands including Maven Wrapper
 

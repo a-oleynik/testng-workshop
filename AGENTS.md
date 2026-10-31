@@ -133,7 +133,7 @@ src/test/resources/
 | Rule                                                               | Why                                                                   |
 |--------------------------------------------------------------------|-----------------------------------------------------------------------|
 | Do **not** use `@org.junit.jupiter.api.Test`                       | This project is TestNG-only                                           |
-| `IExecutionListener` must be registered in `testng.xml`            | Registering it via `@Listeners` is silently ignored by TestNG         |
+| `IExecutionListener` can be registered via `@Listeners`, `testng.xml`, or `ServiceLoader` | It implements `ITestNGListener`; the "XML only" exception applies to `IAnnotationTransformer`, not `IExecutionListener` |
 | `ISuiteListener` can be registered either way                      | Via `@Listeners` on a class or in `testng.xml` `<listeners>` block    |
 | `@Retries` is a custom annotation                                  | It is read by `RetryAnalyzer` via reflection — not natively by TestNG |
 | Do not add static mutable state to test classes                    | `parallel=methods`, `threadCount=3` is active by default in `pom.xml` |

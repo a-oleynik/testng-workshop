@@ -9,22 +9,27 @@ import org.testng.annotations.Test;
  * <p>{@code IExecutionListener} provides two callback methods:
  * <ul>
  *   <li>{@code onExecutionStart()} — invoked once before TestNG begins any
- *       suite in this JVM run.</li>
+ *       suite in this execution.</li>
  *   <li>{@code onExecutionFinish()} — invoked once after all suites have
  *       completed.</li>
  * </ul>
  *
  * <p>This is coarser-grained than {@link MySuiteListener}: while
  * {@code ISuiteListener} fires once <em>per suite</em>, this listener fires
- * exactly once <em>per process</em>, regardless of how many suites are run.
- * Use it for truly global infrastructure — for example, starting a Docker
- * container or recording a JVM-wide metric.
+ * exactly once <em>per TestNG execution</em>, regardless of how many suites
+ * are run within it. (A single JVM can run several TestNG executions in
+ * sequence.) Use it for truly global infrastructure — for example, starting
+ * a Docker container or recording a metric for the whole run.
  *
- * <p><b>Important:</b> {@code IExecutionListener} <strong>cannot</strong> be
- * registered via the {@code @Listeners} annotation on a test class.
- * It must be declared in the {@code <listeners>} block of a
- * {@code testng.xml} suite file. Run this test through the provided
- * {@code testngsuites.xml} to observe the listener output:
+ * <p><b>Registration:</b> {@code IExecutionListener} extends
+ * {@code ITestNGListener}, so — like most TestNG listeners — it can be
+ * registered via the {@code @Listeners} annotation on a test class, in the
+ * {@code <listeners>} block of a {@code testng.xml} suite file, or
+ * auto-detected via {@code ServiceLoader}. (The "XML only" restriction
+ * applies to {@code IAnnotationTransformer}, not to this interface.) This
+ * Workshop registers it in {@code testngsuites.xml} for suite-wide coverage.
+ * Run this test through the provided {@code testngsuites.xml} to observe
+ * the listener output:
  *
  * <pre>
  * mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testngsuites.xml

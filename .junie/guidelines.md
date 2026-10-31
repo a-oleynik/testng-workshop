@@ -99,7 +99,7 @@ Related project: [JUnit Workshop](https://github.com/a-oleynik/junit-workshop) f
 ## Important Rules
 
 - This project uses **TestNG only** — do not add JUnit 5 (`org.junit.jupiter`) annotations or imports
-- `IExecutionListener` **must** be registered in `testng.xml` — registering it via `@Listeners` on a class is silently ignored
+- `IExecutionListener` can be registered via `@Listeners`, `testng.xml`, or `ServiceLoader` — the "XML only" restriction applies to `IAnnotationTransformer`, not `IExecutionListener`
 - `ISuiteListener` can be registered either via `@Listeners` or in `testng.xml`
 - The `@Retries` annotation is a custom meta-annotation — it is read by `RetryAnalyzer` via reflection, not by TestNG directly
 - Do not change `<parallel>methods</parallel>` in `pom.xml` without auditing all test classes for shared mutable state

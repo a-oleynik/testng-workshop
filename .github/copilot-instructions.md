@@ -95,7 +95,13 @@ Or globally in `testng.xml`:
 </listeners>
 ```
 
-### IExecutionListener — must be registered in XML only (not via @Listeners)
+### IExecutionListener — can be registered via @Listeners, testng.xml, or ServiceLoader
+
+`IExecutionListener` extends `ITestNGListener`, so (like most TestNG listeners) it can be
+attached with `@Listeners` on a test class, declared in the `<listeners>` block of a
+`testng.xml`, or auto-detected via `ServiceLoader`
+(`META-INF/services/org.testng.ITestNGListener`). The "XML-only, `@Listeners` is ignored"
+restriction applies to `IAnnotationTransformer`, not to `IExecutionListener`.
 
 ## Running Tests
 
@@ -148,7 +154,7 @@ mvnw.cmd clean test      # Windows
    - `TestListenerAdapter` — extend and override only the callbacks you need
    - `IAnnotationTransformer` — transform annotations at runtime (e.g. inject retry)
 3. Register via `@Listeners(value = MyListener.class)` on the test class **or** add to the `<listeners>` block of a `testng.xml`.
-4. **Critical exception**: `IExecutionListener` must be registered in `testng.xml` only — `@Listeners` is silently ignored for this interface.
+4. **Note**: `IExecutionListener` can be registered via `@Listeners`, `testng.xml`, or `ServiceLoader` — unlike `IAnnotationTransformer`, which TestNG only honors when declared in `testng.xml`.
 
 ### Add a retry test (per-method)
 
@@ -173,7 +179,7 @@ Run: `mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testngretrylist
 
 - Do not add JUnit 5 annotations (`@org.junit.jupiter.api.Test`) — this project uses TestNG only.
 - Do not change `<parallel>methods</parallel>` in `pom.xml` without considering thread-safety of shared state.
-- Do not register `IExecutionListener` via `@Listeners` — it will be silently ignored; use `testng.xml`.
+- Do not register `IAnnotationTransformer` via `@Listeners` — it is silently ignored; use `testng.xml`. (`IExecutionListener` does not have this restriction.)
 - Do not add a `public` access modifier to `@BeforeSuite` / `@AfterSuite` methods unnecessarily — TestNG does not require it.
 - Do not introduce static mutable state in test classes — parallel execution (`threadCount=3`) is enabled by default.
 

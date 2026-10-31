@@ -8,8 +8,11 @@
       2. ISuiteListener (MySuiteListener)         → SuiteListenerTest
       3. IExecutionListener (MyExecutionListener) → ExecutionListenerTest
 
-    IExecutionListener MUST be registered here in the <listeners> block;
-    it cannot be attached via @Listeners on a test class.
+    IExecutionListener is registered here in the <listeners> block for
+    convenience and guaranteed suite-wide coverage; it extends
+    ITestNGListener, so it could also be attached via @Listeners on a test
+    class or auto-detected via ServiceLoader (the "XML only" restriction
+    applies to IAnnotationTransformer, not to IExecutionListener).
     ISuiteListener can be registered either way — here for global coverage.
 
     Run with:
