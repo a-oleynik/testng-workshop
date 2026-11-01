@@ -2,6 +2,7 @@
 [![Java CI with Maven](https://github.com/a-oleynik/testng-workshop/actions/workflows/maven.yml/badge.svg)](https://github.com/a-oleynik/testng-workshop/actions/workflows/maven.yml)
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
 [![Maven](https://img.shields.io/badge/Maven-3.9+-blue.svg)](https://maven.apache.org/)
+[![Gradle](https://img.shields.io/badge/Gradle-9.6.0-02303A.svg)](https://gradle.org/)
 [![TestNG](https://img.shields.io/badge/TestNG-7.12.0-green.svg)](https://testng.org/)
 [![AssertJ](https://img.shields.io/badge/AssertJ-3.27.7-yellowgreen.svg)](https://assertj.github.io/doc/)
 [![Hamcrest](https://img.shields.io/badge/Hamcrest-3.0-yellowgreen.svg)](https://hamcrest.org/)
@@ -81,17 +82,28 @@ Use this repository if you want to:
 
 ## 🚀 Quick Start
 
+This checkout supports **Maven and Gradle independently**, using the same
+`src/main/java`, `src/test/java`, and `src/test/resources` directories.
+
 ```bash
 git clone https://github.com/a-oleynik/testng-workshop.git
 cd testng-workshop
-mvn clean test
+
+# Maven
+./mvnw clean test
+
+# Gradle
+./gradlew clean test
 ```
 
-> 💡 **No local Maven?** Use the included Maven Wrapper instead:
-> ```bash
-> ./mvnw clean test      # Linux / macOS
-> mvnw.cmd clean test    # Windows
-> ```
+On Windows PowerShell, use `.\mvnw.cmd clean test` or `.\gradlew.bat clean test`.
+Locally installed Maven also works: `mvn clean test`.
+
+### Import into an IDE
+
+Import `pom.xml` for Maven or `settings.gradle` / `build.gradle` for Gradle.
+In IntelliJ IDEA, choose one build model for the current IDE project when both
+are detected, as in the companion JUnit Workshop.
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
@@ -102,23 +114,27 @@ mvn clean test
 > 💡 **Need help setting up your environment?**  
 > Check the comprehensive [Java, Maven & Gradle Setup Guide (Windows, macOS, Ubuntu)](https://medium.com/@andrei.oleynik/how-to-install-and-set-up-java-on-windows-macos-and-ubuntu-jdk-maven-and-gradle-728a732dd123) covering JDK installation, `JAVA_HOME` configuration, build tools setup, and troubleshooting.
 
-| Tool              | Minimum version                   | Notes                                                     |
-|-------------------|-----------------------------------|-----------------------------------------------------------|
-| **JDK**           | 21 LTS                            |                                                           |
-| **Maven**         | 3.9+ *(optional but recommended)* | Not required if using the included Maven Wrapper (`mvnw`) |
-| **Git**           | 2.x+ *(optional)*                 | For cloning and managing repository revisions             |
-| **IDE**           | Any (IntelliJ IDEA recommended)   | Lombok plugin required for IDE support                    |
-| **Lombok plugin** | Latest                            | IntelliJ: *Settings → Plugins → Lombok*                   |
+| Tool              | Minimum version                   | Notes                                                         |
+|-------------------|-----------------------------------|---------------------------------------------------------------|
+| **JDK**           | 21 LTS                            |                                                               |
+| **Maven**         | 3.9+ *(optional but recommended)* | Not required if using the included Maven Wrapper (`mvnw`)     |
+| **Gradle**        | 9.6.0 *(optional)*                | Not required if using the included Gradle Wrapper (`gradlew`) |
+| **Git**           | 2.x+ *(optional)*                 | For cloning and managing repository revisions                 |
+| **IDE**           | Any (IntelliJ IDEA recommended)   | Lombok plugin required for IDE support                        |
+| **Lombok plugin** | Latest                            | IntelliJ: *Settings → Plugins → Lombok*                       |
 
-> 💡 **Maven Wrapper included** — this project ships with `mvnw` (Linux/macOS) and `mvnw.cmd` (Windows).  
-> You can use it instead of a locally installed Maven. The wrapper automatically downloads the correct Maven version on first run.
+> 💡 **Maven and Gradle Wrappers included** — no local build-tool installation is required.
+> Each wrapper downloads its pinned version on first run (internet access required):
+> Maven 3.9.12 or Gradle 9.6.0. Both builds require JDK 21 on `PATH` / `JAVA_HOME`.
 >
 > ```bash
-> # Linux / macOS
+> # Linux / macOS (or Git Bash on Windows)
 > ./mvnw clean test
+> ./gradlew clean test
 >
-> # Windows
-> mvnw.cmd clean test
+> # Windows PowerShell
+> .\mvnw.cmd clean test
+> .\gradlew.bat clean test
 > ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
@@ -136,6 +152,7 @@ mvn clean test
 | OpenCSV               | `5.12.0`     |
 | SLF4J                 | `2.0.18`     |
 | Maven Surefire Plugin | `3.5.6`      |
+| Gradle Wrapper        | `9.6.0`      |
 | Java `--release`      | `21`         |
 
 [⬆ Back to Table of Contents](#-table-of-contents)
@@ -237,10 +254,10 @@ These topics assume familiarity with TestNG basics.
 
 TestNG provides three strategies for running code at suite scope, from simplest to most powerful:
 
-| Strategy                       | Class                                           | When to use                                                     |
-|--------------------------------|-------------------------------------------------|-----------------------------------------------------------------|
-| `@BeforeSuite` / `@AfterSuite` | `SuiteAnnotationsTest`                          | Simplest option; lives inside a test class                      |
-| `ISuiteListener`               | `SuiteListenerTest` + `MySuiteListener`         | Infrastructure code outside the test hierarchy; fires per suite |
+| Strategy                       | Class                                           | When to use                                                                                                   |
+|--------------------------------|-------------------------------------------------|---------------------------------------------------------------------------------------------------------------|
+| `@BeforeSuite` / `@AfterSuite` | `SuiteAnnotationsTest`                          | Simplest option; lives inside a test class                                                                    |
+| `ISuiteListener`               | `SuiteListenerTest` + `MySuiteListener`         | Infrastructure code outside the test hierarchy; fires per suite                                               |
 | `IExecutionListener`           | `ExecutionListenerTest` + `MyExecutionListener` | Fires once per TestNG execution, across all its suites; registrable via `@Listeners`, XML, or `ServiceLoader` |
 
 **Full fixture execution order:**
@@ -361,6 +378,22 @@ Tests run concurrently by default. Fine-tune parallelism per suite with `paralle
 mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testng2.xml
 ```
 
+Gradle uses native TestNG integration with the same method-level parallelism:
+
+```groovy
+test {
+    maxParallelForks = 1
+    useTestNG {
+        parallel = 'methods'
+        threadCount = 3
+    }
+}
+```
+
+`maxParallelForks = 1` allows one Gradle test worker JVM. TestNG's `threadCount = 3`
+controls the method threads inside that JVM. Gradle's `--max-workers` limits
+Gradle task workers separately; it does not set the TestNG thread count.
+
 ### 10. TestNG XML Suites
 
 All suite XML files live in `src/test/resources/`. They demonstrate:
@@ -400,13 +433,23 @@ mvn clean site
 ### Run all tests (and generate the reports)
 
 ```bash
+# Maven
 mvn clean test
+
+# Gradle (Windows PowerShell: .\gradlew.bat clean test)
+./gradlew clean test
 ```
 
 > Reports are written to:
 >
 > - Surefire report: `target/surefire-reports/index.html`
 > - TestNG emailable report: `target/surefire-reports/emailable-report.html`
+
+Gradle writes its HTML report to `build/reports/tests/test/index.html` and XML
+results to `build/test-results/test/`. Maven outputs to `target/`; Gradle outputs
+to `build/`. Each build compiles and tests the shared sources independently.
+Gradle's `test` task can be up-to-date on repeat runs; use `clean test` or
+`test --rerun-tasks` to force execution. The group and XML commands below use Maven.
 
 ### Run a single test class
 
@@ -603,6 +646,8 @@ src/
 - [Maven Surefire Plugin](https://maven.apache.org/surefire/maven-surefire-plugin/)
 - [Maven Surefire Report Plugin](https://maven.apache.org/surefire/maven-surefire-report-plugin/)
 - [Maven Wrapper](https://maven.apache.org/wrapper/) — run Maven without a local installation
+- [Gradle Java Plugin](https://docs.gradle.org/current/userguide/java_plugin.html)
+- [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html) — run Gradle without a local installation
 - [JUnit Workshop](https://github.com/a-oleynik/junit-workshop) — companion JUnit 6 examples (there are also branches with JUnit 5 & 4)
 - [Selenium Example](https://github.com/a-oleynik/selenium-example) — real-world Selenium framework using TestNG
 - [testng.xml Is Legacy. Here’s What Modern TestNG Suites Should Look Like](https://medium.com/@andrei.oleynik/testng-xml-is-a-legacy-concept-heres-what-modern-test-suites-should-look-like-bd5cb380db61) — article on modern TestNG suite configuration

@@ -1,0 +1,5 @@
+# Unix wrapper scripts must remain executable shell input on every checkout.
+/mvnw text eol=lf
+/gradlew text eol=lf
+/mvnw.cmd text eol=crlf
+/gradlew.bat text eol=crlf

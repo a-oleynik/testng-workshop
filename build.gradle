@@ -1,0 +1,65 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.oleynik.qa.workshop'
+version = '2.0-SNAPSHOT'
+description = 'TestNG 7 workshop examples'
+
+def versions = [
+        testng  : '7.12.0',
+        openCsv : '5.12.0',
+        assertJ : '3.27.7',
+        hamcrest: '3.0',
+        lombok  : '1.18.48',
+        slf4j   : '2.0.18'
+]
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.testng:testng:${versions.testng}"
+    implementation "com.opencsv:opencsv:${versions.openCsv}"
+    implementation "org.slf4j:slf4j-api:${versions.slf4j}"
+
+    compileOnly "org.projectlombok:lombok:${versions.lombok}"
+    annotationProcessor "org.projectlombok:lombok:${versions.lombok}"
+    testCompileOnly "org.projectlombok:lombok:${versions.lombok}"
+    testAnnotationProcessor "org.projectlombok:lombok:${versions.lombok}"
+
+    testImplementation "org.assertj:assertj-core:${versions.assertJ}"
+    testImplementation "org.hamcrest:hamcrest:${versions.hamcrest}"
+    testImplementation "org.slf4j:slf4j-simple:${versions.slf4j}"
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+    options.encoding = 'UTF-8'
+}
+
+test {
+    // One Gradle test worker JVM; TestNG schedules methods on three threads inside it.
+    maxParallelForks = 1
+    useTestNG {
+        parallel = 'methods'
+        threadCount = 3
+    }
+    systemProperty 'file.encoding', 'UTF-8'
+
+    testLogging {
+        exceptionFormat = 'full'
+        showStandardStreams = true
+    }
+    reports {
+        junitXml.required = true
+        html.required = true
+    }
+}
