@@ -148,26 +148,26 @@ commands you run. The [Feature Map](#-feature-map) lists the test classes for ea
 ├── workflows/
 │   └── maven.yml                    # GitHub Actions CI — all tests and optional group selection
 └── copilot-instructions.md          # GitHub Copilot workspace instructions
-.gradle/                            # Generated local Gradle cache
+.gradle/                             # Generated local Gradle cache
 .junie/
 └── guidelines.md                    # JetBrains Junie project guidelines
 .mvn/
 └── wrapper/
     └── maven-wrapper.properties     # Maven Wrapper configuration — Maven 3.9.12
-build/                              # Generated Gradle output
+build/                               # Generated Gradle output
 ├── classes/java/
-│   ├── main/                       # Compiled shared utilities, models, and listeners
-│   └── test/                       # Compiled tests
-├── libs/                           # Workshop utilities JAR after build
+│   ├── main/                        # Compiled shared utilities, models, and listeners
+│   └── test/                        # Compiled tests
+├── libs/                            # Workshop utilities JAR after build
 ├── reports/tests/
 │   ├── suiteTest/
-│   │   └── index.html        # HTML report for the selected XML suite
+│   │   └── index.html               # HTML report for the selected XML suite
 │   └── test/
-│       └── index.html             # HTML report for ordinary test discovery
-├── resources/test/                 # Copied test resources
+│       └── index.html               # HTML report for ordinary test discovery
+├── resources/test/                  # Copied test resources
 └── test-results/
-    ├── suiteTest/                  # XML results for suiteTest
-    └── test/                       # XML results for test
+    ├── suiteTest/                   # XML results for suiteTest
+    └── test/                        # XML results for test
 gradle/
 └── wrapper/
     ├── gradle-wrapper.jar           # Committed Gradle Wrapper bootstrap JAR
@@ -197,38 +197,38 @@ src/
     │   ├── retry/                   # Retry strategies (IRetryAnalyzer, IAnnotationTransformer)
     │   └── suites/                  # @BeforeSuite/@AfterSuite, @BeforeTest/@AfterTest, ISuiteListener, IExecutionListener
     └── resources/
-        ├── numbers.csv             # Input / expected factorial values for CSV data providers
-        ├── testnested.xml          # Discover nested tests by package
-        ├── testng1.xml             # Include / exclude specific test methods
-        ├── testng2.xml             # Run fixed classes in parallel
-        ├── testnggroups1.xml       # Groups-of-groups
-        ├── testnggroups2.xml       # Smoke group only
-        ├── testngretrylistener.xml # Register RetryTransformer globally for this suite
-        └── testngsuites.xml        # Suite / execution listeners and lifecycle annotations
-target/                             # Generated Maven output
-├── classes/                        # Compiled shared utilities, models, and listeners
+        ├── numbers.csv              # Input / expected factorial values for CSV data providers
+        ├── testnested.xml           # Discover nested tests by package
+        ├── testng1.xml              # Include / exclude specific test methods
+        ├── testng2.xml              # Run fixed classes in parallel
+        ├── testnggroups1.xml        # Groups-of-groups
+        ├── testnggroups2.xml        # Smoke group only
+        ├── testngretrylistener.xml  # Register RetryTransformer globally for this suite
+        └── testngsuites.xml         # Suite / execution listeners and lifecycle annotations
+target/                              # Generated Maven output
+├── classes/                         # Compiled shared utilities, models, and listeners
 ├── reports/
-│   └── surefire.html               # Standalone surefire-report:report output
-├── site/                           # Maven project website after site
+│   └── surefire.html                # Standalone surefire-report:report output
+├── site/                            # Maven project website after site
 ├── surefire-reports/
-│   ├── emailable-report.html       # TestNG emailable report
-│   ├── index.html                  # TestNG HTML report after Maven test
-│   ├── TEST-*.xml                  # JUnit-compatible XML results for CI
-│   └── testng-results.xml          # Native TestNG results
-└── test-classes/                   # Compiled tests and copied test resources
+│   ├── emailable-report.html        # TestNG emailable report
+│   ├── index.html                   # TestNG HTML report after Maven test
+│   ├── TEST-*.xml                   # JUnit-compatible XML results for CI
+│   └── testng-results.xml           # Native TestNG results
+└── test-classes/                    # Compiled tests and copied test resources
 
-.gitattributes                      # Wrapper script line endings
-.gitignore                          # Generated output, caches, and IDE exclusions
-AGENTS.md                           # AI agent instructions and verification commands
-build.gradle                        # Java 21, dependencies, test, suiteTest, and local publication
-gradlew                             # Gradle Wrapper for Unix
-gradlew.bat                         # Gradle Wrapper for Windows
-LICENSE                             # MIT license
-mvnw                                # Maven Wrapper for Unix
-mvnw.cmd                            # Maven Wrapper for Windows
-pom.xml                             # Maven dependencies, Lombok processor, and Surefire configuration
-README.md                           # Project documentation and run commands
-settings.gradle                     # Gradle project name
+.gitattributes                       # Wrapper script line endings
+.gitignore                           # Generated output, caches, and IDE exclusions
+AGENTS.md                            # AI agent instructions and verification commands
+build.gradle                         # Java 21, dependencies, test, suiteTest, and local publication
+gradlew                              # Gradle Wrapper for Unix
+gradlew.bat                          # Gradle Wrapper for Windows
+LICENSE                              # MIT license
+mvnw                                 # Maven Wrapper for Unix
+mvnw.cmd                             # Maven Wrapper for Windows
+pom.xml                              # Maven dependencies, Lombok processor, and Surefire configuration
+README.md                            # Project documentation and run commands
+settings.gradle                      # Gradle project name
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
