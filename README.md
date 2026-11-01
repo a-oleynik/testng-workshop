@@ -44,15 +44,18 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 
 ## 🤔 Why this repository?
 
-This project brings fundamental and advanced TestNG 7 features together in practical Java examples you can clone, run, and adapt to your own projects. Maven and Gradle run the same sources, so you can follow the workshop with either build tool.
+TestNG is more than `@Test`, assertions, and `@DataProvider`.
+
+This project covers fundamental and advanced TestNG 7 features with practical, runnable Java examples you can clone, execute, and adapt to your own projects.
 
 Use this repository if you want to:
 
 - **learn TestNG from scratch** with a structured, step-by-step learning path
-- **explore runnable examples** that connect annotations, configuration, and assertions to test results
-- **explore advanced features** — listeners (`ITestListener`, `ISuiteListener`, `IExecutionListener`), retry strategies, parallel execution, XML suites, and group filtering
-- **study testing patterns in Java** — soft assertions, data-driven tests with `@DataProvider`, assumptions, and conditional execution
-- **understand test and suite lifecycles** — `@BeforeSuite`, `@BeforeTest`, suite listeners, and execution listeners, including when each hook runs
+- **explore runnable examples** that demonstrate TestNG features in practice
+- **master advanced features** — listeners, retry strategies, parallel execution, groups, dependencies, and data-driven testing
+- **study automated testing patterns in Java** — soft assertions, conditional execution, parameterized tests, and more
+- **understand test and suite orchestration** — lifecycle annotations (`@BeforeSuite`, `@BeforeTest`, `@BeforeClass`), XML suites, listeners, and execution hooks
+- **work with Maven and Gradle** — run the same test examples using either build tool
 - **compare TestNG and JUnit** patterns and idioms side-by-side with the companion [JUnit Workshop](https://github.com/a-oleynik/junit-workshop)
 - **use it as material** for workshops, tech talks, onboarding sessions, and self-study
 
