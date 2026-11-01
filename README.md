@@ -9,15 +9,16 @@
 [![Lombok](https://img.shields.io/badge/Lombok-1.18.48-red.svg)](https://projectlombok.org/)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
-> Companion code for the IT Talk **"JUnit 6 vs TestNG 7"**.
+A hands-on Java testing workshop with runnable examples using TestNG 7.
+
+Learn TestNG from scratch, explore advanced features, and compare TestNG with JUnit. Includes Maven and Gradle support, step-by-step learning paths, and practical examples for articles, workshops, tech talks, and self-study.
+
+> Originally created as companion code for the IT Talk **"JUnit 6 vs TestNG 7"**.
 > Previous edition: [TestNG vs. JUnit 4 slides](https://www.slideshare.net/oleynikandrey/it-talk-testng-6-vs-junit-4/) · [TestNG vs. JUnit 4 webinar](https://youtu.be/3C-Nu5mkyOQ?t=3207)
 >
 > **Related projects:**
 > - 🧪 [JUnit Workshop](https://github.com/a-oleynik/junit-workshop) — companion JUnit 6 examples to compare side-by-side with this repo
 > - 🌐 [Selenium Example](https://github.com/a-oleynik/selenium-example) — real-world Selenium WebDriver framework built on top of TestNG
-
-Hands-on examples for **TestNG 7** in Java — covering every major feature from basic assertions to advanced suite orchestration, listeners, data providers, retry strategies, and parallel execution.  
-Use it as a practical reference, a workshop starter kit, or a side-by-side comparison with the companion [JUnit Workshop](https://github.com/a-oleynik/junit-workshop).
 
 ---
 
