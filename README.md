@@ -307,41 +307,52 @@ Disable tests with `@Test(enabled = false)` or skip them dynamically by throwing
 
 Add human-readable descriptions to tests with `@Test(description = "…")` for better report output.
 
-### 6. Hamcrest matchers
-
-`HamcrestTest`
-
-Write expressive assertions with `assertThat`, `equalTo`, `is`, `closeTo`, `both…and`, and more.
-
-### 7. Soft assertions
+### 6. Soft assertions
 
 `SoftAssertTest`
 
 Collect all assertion failures with `SoftAssert` before reporting — no early bail-out.
 
-### 8. Assumptions
+### 7. Assumptions
 
 `AssumeTest`
 
 Skip tests dynamically when preconditions aren't met using AssertJ's `assumeThat`.
 
-### 9. Parameterized tests
+### 8. Parameterized tests
 
 `StaticDataProviderTest`
 
 Drive one test method with multiple data rows using an inline `@DataProvider`.
 
-### 10. Groups
+### 9. Groups
 
 `GroupTest`
 
 Mark tests as `Smoke` or `Regression` and run subsets from the command line or via XML suites.
 
-### 11. Suite & test-block lifecycle
+### 10. Suite & test-block lifecycle
 
 `SuiteAnnotationsTest`, `TestAnnotationsTest`
 
-See `@BeforeSuite` / `@AfterSuite` run once around the entire suite, and `@BeforeTest` / `@AfterTest` run once per `<test>` block in a `testng.xml` file. Having seen XML suites in step 10, the distinction between `@BeforeTest` and `@BeforeClass` now makes full sense — and this topic bridges directly into the Advanced Learning Path section.
+See `@BeforeSuite` / `@AfterSuite` run once around the entire suite, and `@BeforeTest` / `@AfterTest` run once per `<test>` block in a `testng.xml` file. Having seen XML suites in step 9, the distinction between `@BeforeTest` and `@BeforeClass` now makes full sense — and this topic bridges directly into the Advanced Learning Path section.
+
+### 11. Surefire HTML Report Generation
+
+```bash
+./mvnw clean surefire-report:report
+./gradlew clean test
+# or
+./mvnw clean site
+./gradlew clean test
+```
+
+> Maven Surefire Report output: `target/reports/surefire.html` for `surefire-report:report`
+> (current standalone-plugin default). Maven Site uses `target/site/`;
+> Gradle HTML test reports use `build/reports/tests/test/index.html`.
+
+For this test-only project, `./gradlew clean test` provides the test-report equivalent
+of either Maven command above. It does not generate the Maven project website.
 
 **Run the whole beginner suite:**
 
@@ -444,7 +455,13 @@ Chain tests so that a downstream test is skipped (not failed) when its upstream 
 - Separate data-provider logic into a dedicated `MyDataProvider` class and reference it with `dataProviderClass`.
 - Use the custom `@DataSource(path = "…")` annotation to bind a CSV file path to a test method at runtime.
 
-### 5. Nested Test Classes
+### 5. Hamcrest matchers
+
+`HamcrestTest`
+
+Write expressive assertions with `assertThat`, `equalTo`, `is`, `closeTo`, `both…and`, and more.
+
+### 6. Nested Test Classes
 
 `NestedTest` → `nested/` package  
 Group related scenarios (`Multiply`, `Divide`, `Add`) as public inner classes inside a parent class. Run them via `testnested.xml`:
@@ -454,12 +471,12 @@ Group related scenarios (`Multiply`, `Divide`, `Add`) as public inner classes in
 ./gradlew clean suiteTest -Psuite=src/test/resources/testnested.xml
 ```
 
-### 6. Test Execution Order
+### 7. Test Execution Order
 
 `ExecutionOrderTest` → `execution/order/` package  
 Control method execution order with the `priority` attribute on `@Test` (lower value = earlier execution). Methods without a priority run before prioritized ones.
 
-### 7. Listeners
+### 8. Listeners
 
 `TestListenerTest`, `MethodListenerTest` → `listeners/` package  
 - **`ITestListener`** (`MyTestListener`) — react to test start, success, failure, and skip events. Ideal for screenshot capture on failure.  
@@ -467,7 +484,7 @@ Control method execution order with the `priority` attribute on `@Test` (lower v
 - **`TestListenerAdapter`** (`MyExtendedTestListener`) — extend the adapter and override only the callbacks you need.  
 Attach listeners declaratively with `@Listeners(value = MyTestListener.class)` or globally via a `testng.xml` `<listeners>` block.
 
-### 8. Retry Strategies
+### 9. Retry Strategies
 
 `RetryTest` — `IRetryAnalyzer` + custom `@Retries(limit = N)` annotation applied per test method  
 `RetryTransformerTest` — `IAnnotationTransformer` (`RetryTransformer`) injects `RetryAnalyzer` globally for every test in the suite without touching test source code  
@@ -479,7 +496,7 @@ Run the transformer-based retry suite:
 ./gradlew clean suiteTest -Psuite=src/test/resources/testngretrylistener.xml
 ```
 
-### 9. Parallel Execution
+### 10. Parallel Execution
 
 Configured globally in `pom.xml` via Surefire:
 
@@ -511,7 +528,7 @@ test {
 controls the method threads inside that JVM. Gradle's `--max-workers` limits
 Gradle task workers separately; it does not set the TestNG thread count.
 
-### 10. TestNG XML Suites
+### 11. TestNG XML Suites
 
 All suite XML files live in `src/test/resources/`. They demonstrate:
 
@@ -557,23 +574,6 @@ The tasks write separate results:
 Run `./gradlew suiteTest -Psuite=src/test/resources/testngsuites.xml` without
 `clean` to retain an existing ordinary test report. Changing `-Psuite` or the
 selected XML file invalidates the suite task's up-to-date result.
-
-### 11. Surefire HTML Report Generation
-
-```bash
-./mvnw clean surefire-report:report
-./gradlew clean test
-# or
-./mvnw clean site
-./gradlew clean test
-```
-
-> Maven Surefire Report output: `target/reports/surefire.html` for `surefire-report:report`
-> (current standalone-plugin default). Maven Site uses `target/site/`;
-> Gradle HTML test reports use `build/reports/tests/test/index.html`.
-
-For this test-only project, `./gradlew clean test` provides the test-report equivalent
-of either Maven command above. It does not generate the Maven project website.
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
