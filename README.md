@@ -23,29 +23,22 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 
 ## 📋 Table of Contents
 
-- [Found it useful?](#-found-it-useful)
 - [Why this repository?](#-why-this-repository)
 - [Who Is This For?](#-who-is-this-for)
 - [Quick Start](#-quick-start)
 - [Prerequisites](#-prerequisites)
-- [Supported Versions](#-supported-versions)
+- [Project Structure](#-project-structure)
 - [Feature Map](#-feature-map)
 - [Learning Path — Beginners](#-learning-path--beginners)
 - [Advanced Topics — Path for Senior Engineers](#-advanced-topics--path-for-senior-engineers)
 - [Command Examples](#-command-examples)
+- [Supported Versions](#-supported-versions)
 - [CI / CD](#-ci--cd)
 - [AI Assistant Support](#-ai-assistant-support)
-- [Project Structure](#-project-structure)
 - [Additional Resources](#-additional-resources)
 - [Useful Links](#-useful-links)
+- [Found it useful?](#-found-it-useful)
 - [License](#-license)
-
----
-
-## ⭐ Found it useful?
-
-If you found useful examples or information in this repository, please give it a ⭐  
-Your support helps the project reach more Java and QA engineers.
 
 ---
 
@@ -141,19 +134,34 @@ are detected, as in the companion JUnit Workshop.
 
 ---
 
-## 🧩 Supported Versions
+## 📁 Project Structure
 
-| Library               | Version used |
-|-----------------------|--------------|
-| TestNG                | `7.12.0`     |
-| AssertJ               | `3.27.7`     |
-| Hamcrest              | `3.0`        |
-| Lombok                | `1.18.48`    |
-| OpenCSV               | `5.12.0`     |
-| SLF4J                 | `2.0.18`     |
-| Maven Surefire Plugin | `3.5.6`      |
-| Gradle Wrapper        | `9.6.0`      |
-| Java `--release`      | `21`         |
+```
+src/
+├── main/java/com/oleynik/qa/workshop/testng/
+│   ├── model/           # Domain model (User, MyDoubleWrapper)
+│   ├── annotations/     # Custom annotations (@Retries, @DataSource)
+│   ├── dataproviders/   # Reusable data provider (MyDataProvider)
+│   ├── listeners/       # ITestListener, IInvokedMethodListener, IAnnotationTransformer (RetryTransformer)
+│   ├── suites/          # ISuiteListener (MySuiteListener), IExecutionListener (MyExecutionListener)
+│   ├── retry/           # IRetryAnalyzer implementation (RetryAnalyzer)
+│   ├── Factorial.java   # Utility class used by data-driven tests
+│   └── Utils.java       # Shared test utilities (e.g. waitFor)
+└── test/java/com/oleynik/qa/workshop/testng/
+    ├── general/         # Core assertions, fixtures, exceptions, descriptions, timeouts
+    ├── group/asserts/   # Soft assertions
+    ├── conditional/     # Assumptions (AssertJ assumeThat)
+    ├── ddt/             # Data-driven tests (@DataProvider, CSV, external provider)
+    ├── nested/          # Inner-class test grouping
+    ├── grouping/        # TestNG groups (@Test(groups = …))
+    ├── dependencies/    # Test dependencies (dependsOnMethods / dependsOnGroups)
+    ├── execution/order/ # Test execution ordering (priority)
+    ├── listeners/       # Tests demonstrating listener hooks
+    ├── suites/          # Suite lifecycle: @BeforeSuite/@AfterSuite, @BeforeTest/@AfterTest,
+    │                    #   ISuiteListener, IExecutionListener
+    ├── retry/           # Retry strategies (IRetryAnalyzer, IAnnotationTransformer)
+    └── repeat/          # Repeated execution (invocationCount)
+```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
@@ -610,6 +618,24 @@ Neither command executes the tests.
 
 ---
 
+## 🧩 Supported Versions
+
+| Library               | Version used |
+|-----------------------|--------------|
+| TestNG                | `7.12.0`     |
+| AssertJ               | `3.27.7`     |
+| Hamcrest              | `3.0`        |
+| Lombok                | `1.18.48`    |
+| OpenCSV               | `5.12.0`     |
+| SLF4J                 | `2.0.18`     |
+| Maven Surefire Plugin | `3.5.6`      |
+| Gradle Wrapper        | `9.6.0`      |
+| Java `--release`      | `21`         |
+
+[⬆ Back to Table of Contents](#-table-of-contents)
+
+---
+
 ## 🚦 CI / CD
 
 This project uses **GitHub Actions** with a manually triggered workflow.
@@ -693,39 +719,6 @@ All files cover:
 
 ---
 
-## 📁 Project Structure
-
-```
-src/
-├── main/java/com/oleynik/qa/workshop/testng/
-│   ├── model/           # Domain model (User, MyDoubleWrapper)
-│   ├── annotations/     # Custom annotations (@Retries, @DataSource)
-│   ├── dataproviders/   # Reusable data provider (MyDataProvider)
-│   ├── listeners/       # ITestListener, IInvokedMethodListener, IAnnotationTransformer (RetryTransformer)
-│   ├── suites/          # ISuiteListener (MySuiteListener), IExecutionListener (MyExecutionListener)
-│   ├── retry/           # IRetryAnalyzer implementation (RetryAnalyzer)
-│   ├── Factorial.java   # Utility class used by data-driven tests
-│   └── Utils.java       # Shared test utilities (e.g. waitFor)
-└── test/java/com/oleynik/qa/workshop/testng/
-    ├── general/         # Core assertions, fixtures, exceptions, descriptions, timeouts
-    ├── group/asserts/   # Soft assertions
-    ├── conditional/     # Assumptions (AssertJ assumeThat)
-    ├── ddt/             # Data-driven tests (@DataProvider, CSV, external provider)
-    ├── nested/          # Inner-class test grouping
-    ├── grouping/        # TestNG groups (@Test(groups = …))
-    ├── dependencies/    # Test dependencies (dependsOnMethods / dependsOnGroups)
-    ├── execution/order/ # Test execution ordering (priority)
-    ├── listeners/       # Tests demonstrating listener hooks
-    ├── suites/          # Suite lifecycle: @BeforeSuite/@AfterSuite, @BeforeTest/@AfterTest,
-    │                    #   ISuiteListener, IExecutionListener
-    ├── retry/           # Retry strategies (IRetryAnalyzer, IAnnotationTransformer)
-    └── repeat/          # Repeated execution (invocationCount)
-```
-
-[⬆ Back to Table of Contents](#-table-of-contents)
-
----
-
 ## 📚 Additional Resources
 
 - [TestNG Documentation](https://testng.org/)
@@ -761,6 +754,13 @@ src/
 - [**IntelliJ Lombok Plugin**](https://plugins.jetbrains.com/plugin/6317-lombok)
 
 [⬆ Back to Table of Contents](#-table-of-contents)
+
+---
+
+## ⭐ Found it useful?
+
+If you found useful examples or information in this repository, please give it a ⭐  
+Your support helps the project reach more Java and QA engineers.
 
 ---
 
