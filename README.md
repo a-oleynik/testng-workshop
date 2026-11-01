@@ -44,15 +44,15 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 
 ## 🤔 Why this repository?
 
-Most TestNG tutorials stop at annotations and `@DataProvider`.  
-This project goes further — it covers the **full TestNG 7 feature set** with real, runnable code you can clone, execute, and adapt immediately.
+This project brings fundamental and advanced TestNG 7 features together in practical Java examples you can clone, run, and adapt to your own projects. Maven and Gradle run the same sources, so you can follow the workshop with either build tool.
 
 Use this repository if you want to:
 
 - **learn TestNG from scratch** with a structured, step-by-step learning path
-- **see real runnable examples** instead of reading documentation only
-- **explore advanced features** — listeners (`ITestListener`, `ISuiteListener`, `IExecutionListener`), retry strategies, parallel execution, XML suites, groups, and data providers
-- **understand suite orchestration** — `@BeforeSuite`, `@BeforeTest`, `ISuiteListener`, and when to use each
+- **explore runnable examples** that connect annotations, configuration, and assertions to test results
+- **explore advanced features** — listeners (`ITestListener`, `ISuiteListener`, `IExecutionListener`), retry strategies, parallel execution, XML suites, and group filtering
+- **study testing patterns in Java** — soft assertions, data-driven tests with `@DataProvider`, assumptions, and conditional execution
+- **understand test and suite lifecycles** — `@BeforeSuite`, `@BeforeTest`, suite listeners, and execution listeners, including when each hook runs
 - **compare TestNG and JUnit** patterns and idioms side-by-side with the companion [JUnit Workshop](https://github.com/a-oleynik/junit-workshop)
 - **use it as material** for workshops, tech talks, onboarding sessions, and self-study
 
