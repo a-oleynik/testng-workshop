@@ -97,7 +97,7 @@ cd testng-workshop
 ```
 
 On Windows PowerShell, use `.\mvnw.cmd clean test` or `.\gradlew.bat clean test`.
-Locally installed Maven also works: `mvn clean test`.
+Locally installed tools also work: `mvn clean test` or `gradle clean test`.
 
 ### Import into an IDE
 
@@ -238,6 +238,7 @@ Work through these topics in order; each builds on the previous one.
 
 ```bash
 mvn clean test
+./gradlew clean test
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
@@ -295,7 +296,8 @@ IExecutionListener.onExecutionFinish()
 Run the full suites demo:
 
 ```bash
-mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testngsuites.xml
+mvn clean test "-Dsurefire.suiteXmlFiles=src/test/resources/testngsuites.xml"
+./gradlew clean suiteTest "-Psuite=src/test/resources/testngsuites.xml"
 ```
 
 ### 2. Groups, `@BeforeGroups` / `@AfterGroups`
@@ -305,17 +307,20 @@ Assign tests to named groups. Use `@BeforeGroups` and `@AfterGroups` for group-s
 Run groups from the command line:
 
 ```bash
-mvn clean test -Dgroups=Regression,Smoke
+mvn clean test "-Dgroups=Regression,Smoke"
+./gradlew clean test "-PincludeGroups=Regression,Smoke"
 ```
 
 Or target a specific XML suite that filters by group:
 
 ```bash
 # Run only Smoke tests via XML
-mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testnggroups2.xml
+mvn clean test "-Dsurefire.suiteXmlFiles=src/test/resources/testnggroups2.xml"
+./gradlew clean suiteTest "-Psuite=src/test/resources/testnggroups2.xml"
 
 # Run groups-of-groups (Smoke + Regression + Fail) via XML
-mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testnggroups1.xml
+mvn clean test "-Dsurefire.suiteXmlFiles=src/test/resources/testnggroups1.xml"
+./gradlew clean suiteTest "-Psuite=src/test/resources/testnggroups1.xml"
 ```
 
 ### 3. Test Dependencies
@@ -336,7 +341,8 @@ Chain tests so that a downstream test is skipped (not failed) when its upstream 
 Group related scenarios (`Multiply`, `Divide`, `Add`) as public inner classes inside a parent class. Run them via `testnested.xml`:
 
 ```bash
-mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testnested.xml
+mvn clean test "-Dsurefire.suiteXmlFiles=src/test/resources/testnested.xml"
+./gradlew clean suiteTest "-Psuite=src/test/resources/testnested.xml"
 ```
 
 ### 6. Test Execution Order
@@ -360,7 +366,8 @@ Attach listeners declaratively with `@Listeners(value = MyTestListener.class)` o
 Run the transformer-based retry suite:
 
 ```bash
-mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testngretrylistener.xml
+mvn clean test "-Dsurefire.suiteXmlFiles=src/test/resources/testngretrylistener.xml"
+./gradlew clean suiteTest "-Psuite=src/test/resources/testngretrylistener.xml"
 ```
 
 ### 9. Parallel Execution
@@ -375,7 +382,8 @@ Configured globally in `pom.xml` via Surefire:
 Tests run concurrently by default. Fine-tune parallelism per suite with `parallel="classes"` or `parallel="tests"` and a custom `thread-count` in any `testng.xml`. For example, `testng2.xml` runs a fixed set of classes in parallel with `thread-count="2"`:
 
 ```bash
-mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testng2.xml
+mvn clean test "-Dsurefire.suiteXmlFiles=src/test/resources/testng2.xml"
+./gradlew clean suiteTest "-Psuite=src/test/resources/testng2.xml"
 ```
 
 Gradle uses native TestNG integration with the same method-level parallelism:
@@ -411,18 +419,52 @@ All suite XML files live in `src/test/resources/`. They demonstrate:
 Run any suite directly:
 
 ```bash
-mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testng1.xml
+mvn clean test "-Dsurefire.suiteXmlFiles=src/test/resources/testng1.xml"
+./gradlew clean suiteTest "-Psuite=src/test/resources/testng1.xml"
 ```
+
+`suiteTest` and `-Psuite` are implemented in this project's `build.gradle`;
+`-Psuite` is not a built-in Gradle option. The path is relative to the repository
+root (an absolute path also works). A missing parameter, missing file, or directory
+fails the task instead of falling back to ordinary test discovery.
+
+This task uses the test runtime classpath and passes the selected XML to native
+TestNG. XML controls classes/packages, method includes/excludes, listeners,
+`preserve-order`, `parallel`, and `thread-count`. The `methods/3` defaults of the
+ordinary `test` task are not applied to `suiteTest`: `testngsuites.xml` stays
+sequential with `parallel="none"`, while `testng2.xml` uses `classes` and two threads.
+Without group parameters, XML group selections are also preserved. The project
+parameters `-PincludeGroups` and `-PexcludeGroups` explicitly override the respective
+XML group selections when supplied; omit them to run the suite as authored.
+See [TestNGOptions](https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/testing/testng/TestNGOptions.html).
+
+The tasks write separate results:
+
+| Task        | HTML report                                | XML results                     |
+|-------------|--------------------------------------------|---------------------------------|
+| `test`      | `build/reports/tests/test/index.html`      | `build/test-results/test/`      |
+| `suiteTest` | `build/reports/tests/suiteTest/index.html` | `build/test-results/suiteTest/` |
+
+Run `./gradlew suiteTest "-Psuite=src/test/resources/testngsuites.xml"` without
+`clean` to retain an existing ordinary test report. Changing `-Psuite` or the
+selected XML file invalidates the suite task's up-to-date result.
 
 ### 11. Surefire HTML Report Generation
 
 ```bash
 mvn clean surefire-report:report
+./gradlew clean test
 # or
 mvn clean site
+./gradlew clean test
 ```
 
-> Reports are written to `target/site/surefire-report.html`
+> Maven Surefire Report output: `target/reports/surefire.html` for `surefire-report:report`
+> (current standalone-plugin default). Maven Site uses `target/site/`;
+> Gradle HTML test reports use `build/reports/tests/test/index.html`.
+
+For this test-only project, `./gradlew clean test` provides the test-report equivalent
+of either Maven command above. It does not generate the Maven project website.
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
@@ -449,66 +491,97 @@ Gradle writes its HTML report to `build/reports/tests/test/index.html` and XML
 results to `build/test-results/test/`. Maven outputs to `target/`; Gradle outputs
 to `build/`. Each build compiles and tests the shared sources independently.
 Gradle's `test` task can be up-to-date on repeat runs; use `clean test` or
-`test --rerun-tasks` to force execution. The group and XML commands below use Maven.
+`test --rerun-tasks` to force execution. The paired commands below show both build tools.
+Use `./mvnw` instead of `mvn` without a local Maven installation. In PowerShell,
+replace `mvn` with `.\mvnw.cmd` and `./gradlew` with `.\gradlew.bat`; keep the
+quoted arguments as shown (especially comma lists, wildcard patterns, and XML paths).
 
 ### Run a single test class
 
 ```bash
-mvn clean test -Dtest=AssertTest
+mvn clean test "-Dtest=AssertTest"
+./gradlew clean test --tests "AssertTest"
 ```
 
 ### Run a single test method
 
 ```bash
-mvn clean test -Dtest=AssertTest#assert_equals_multiplication_test
+mvn clean test "-Dtest=AssertTest#assert_equals_multiplication_test"
+./gradlew clean test --tests "AssertTest.assert_equals_multiplication_test"
 ```
 
 ### Run multiple test classes
 
 ```bash
-mvn clean test -Dtest=AssertTest,HamcrestTest
+mvn clean test "-Dtest=AssertTest,HamcrestTest"
+./gradlew clean test --tests "AssertTest" --tests "HamcrestTest"
 ```
 
 ### Run test methods matching a pattern
 
 ```bash
-mvn clean test -Dtest=AssertTest#assert_equals*
+mvn clean test "-Dtest=AssertTest#assert_equals*"
+./gradlew clean test --tests "AssertTest.assert_equals*"
 ```
 
 ### Run test methods matching multiple patterns
 
 ```bash
-mvn clean test -Dtest=AssertTest#assert_equals*+assert_boolean*
+mvn clean test "-Dtest=AssertTest#assert_equals*+assert_boolean*"
+./gradlew clean test --tests "AssertTest.assert_equals*" --tests "AssertTest.assert_boolean*"
 ```
 
 ### Run tests by group
 
 ```bash
-mvn clean test -Dgroups=Regression,Smoke
+mvn clean test "-Dgroups=Regression,Smoke"
+./gradlew clean test "-PincludeGroups=Regression,Smoke"
+```
+
+Use `Smoke` or `Regression` alone to select a single group. These case-sensitive,
+comma-separated project parameters are connected to TestNG's `includeGroups`
+and `excludeGroups`; Gradle does not interpret Maven's `-Dgroups` automatically.
+Whitespace around each group name is ignored. For example, run Regression
+methods except those also assigned to Smoke:
+
+```bash
+mvn clean test "-Dgroups=Regression" "-DexcludedGroups=Smoke"
+./gradlew clean test "-PincludeGroups=Regression" "-PexcludeGroups=Smoke"
 ```
 
 ### Run a specific TestNG XML suite
 
 ```bash
-mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testng1.xml
+mvn clean test "-Dsurefire.suiteXmlFiles=src/test/resources/testng1.xml"
+./gradlew clean suiteTest "-Psuite=src/test/resources/testng1.xml"
 ```
 
 ### Compile, test, package, and install to local repo
 
 ```bash
 mvn clean install
+./gradlew clean build publishToMavenLocal
 ```
+
+The Gradle `maven-publish` plugin publishes the Java component (JAR and POM) to
+the local Maven repository with the same `com.oleynik.qa.workshop:testng-examples:2.0-SNAPSHOT`
+coordinates as Maven. `build` runs verification before local publication.
 
 ### Skip tests (compile + package + install to local repo without running tests)
 
 ```bash
-mvn clean install -DskipTests
+mvn clean install "-DskipTests"
+./gradlew clean build testClasses publishToMavenLocal -x test
 ```
+
+`testClasses` still compiles the tests, matching Maven's `-DskipTests` behavior.
+Neither command executes the tests.
 
 ### Generate Surefire HTML report (quick)
 
 ```bash
 mvn clean surefire-report:report
+./gradlew clean test
 ```
 
 > Surefire report is written to:
@@ -519,6 +592,7 @@ mvn clean surefire-report:report
 
 ```bash
 mvn clean test -X
+./gradlew clean test --debug
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
@@ -539,10 +613,13 @@ Triggered manually from **Actions → Run workflow** on GitHub.
 
 ### Jobs
 
-| Job          | Name                   | Runs when                             | Command                                  |
-|--------------|------------------------|---------------------------------------|------------------------------------------|
-| `regression` | Regression — all tests | Always                                | `./mvnw -B clean test`                   |
-| `by-group`   | By group — `{groups}`  | Only when `groups` input is filled in | `./mvnw -B clean test -Dgroups={groups}` |
+| Job          | Name                   | Runs when                             | Maven command                              | Equivalent Gradle command                                     |
+|--------------|------------------------|---------------------------------------|--------------------------------------------|---------------------------------------------------------------|
+| `regression` | Regression — all tests | Always                                | `./mvnw -B clean test`                     | `./gradlew --no-daemon clean test`                            |
+| `by-group`   | By group — `{groups}`  | Only when `groups` input is filled in | `./mvnw -B clean test "-Dgroups={groups}"` | `./gradlew --no-daemon clean test "-PincludeGroups={groups}"` |
+
+The current workflow executes Maven. The Gradle column gives the equivalent local/CI commands;
+it does not change the workflow or its artifact paths.
 
 Each job uploads two artifacts after completion — including on failure (`if: always()`):
 
@@ -570,10 +647,13 @@ Each job uploads two artifacts after completion — including on failure (`if: a
 ```bash
 # All tests
 mvn clean test
+./gradlew clean test
 
 # By group
-mvn clean test -Dgroups=Smoke
-mvn clean test -Dgroups=Regression
+mvn clean test "-Dgroups=Smoke"
+./gradlew clean test "-PincludeGroups=Smoke"
+mvn clean test "-Dgroups=Regression"
+./gradlew clean test "-PincludeGroups=Regression"
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)

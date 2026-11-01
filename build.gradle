@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group = 'com.oleynik.qa.workshop'
@@ -45,12 +46,25 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-test {
-    // One Gradle test worker JVM; TestNG schedules methods on three threads inside it.
+publishing {
+    publications {
+        workshop(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+def requestedGroups = { String propertyName ->
+    providers.gradleProperty(propertyName).orElse('').get()
+            .split(',').collect { it.trim() }.findAll { !it.isEmpty() }
+}
+
+tasks.withType(Test).configureEach {
+    // TestNG manages thread concurrency inside this single Gradle test worker JVM.
     maxParallelForks = 1
     useTestNG {
-        parallel = 'methods'
-        threadCount = 3
+        includeGroups.addAll(requestedGroups('includeGroups'))
+        excludeGroups.addAll(requestedGroups('excludeGroups'))
     }
     systemProperty 'file.encoding', 'UTF-8'
 
@@ -61,5 +75,39 @@ test {
     reports {
         junitXml.required = true
         html.required = true
+    }
+}
+
+test {
+    useTestNG {
+        parallel = 'methods'
+        threadCount = 3
+    }
+}
+
+tasks.register('suiteTest', Test) {
+    group = LifecycleBasePlugin.VERIFICATION_GROUP
+    description = 'Runs the TestNG XML suite selected with -Psuite=path/to/suite.xml.'
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+
+    def suitePath = providers.gradleProperty('suite').orElse('').get().trim()
+    def suiteFile = suitePath ? file(suitePath) : null
+    inputs.property('suite', suitePath)
+
+    // XML owns parallelism, thread count, order, listeners, and test selection.
+    // In particular, do not inherit test's methods/3 settings here.
+    useTestNG {
+        if (suiteFile != null) {
+            suites suiteFile
+        }
+    }
+    doFirst {
+        if (suiteFile == null) {
+            throw new GradleException('Select a TestNG XML file with -Psuite=src/test/resources/testngsuites.xml')
+        }
+        if (!suiteFile.isFile()) {
+            throw new GradleException("TestNG suite file does not exist or is not a regular file: ${suiteFile}")
+        }
     }
 }

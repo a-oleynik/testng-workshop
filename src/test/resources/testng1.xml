@@ -5,7 +5,7 @@
         <classes>
             <class name="com.oleynik.qa.workshop.testng.general.AssertTest">
                 <methods>
-                    <include name="multiplication_test"/>
+                    <include name="assert_equals_multiplication_test"/>
                 </methods>
             </class>
             <class name="com.oleynik.qa.workshop.testng.general.FixturesTest">
