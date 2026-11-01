@@ -60,6 +60,17 @@ mvnw.cmd clean test      # Windows
 
 ---
 
+## Documentation structure ordering
+
+All documented directory/file trees and source-layout inventories, including layout tables, must follow these rules:
+
+- At every hierarchy level, list directories first, then files.
+- Within each group, sort entries alphabetically by name, case-insensitively. Include dot-prefixed entries in the same ordering using their literal names.
+- Apply this ordering recursively, including nested directories and collapsed paths.
+- Check documented paths against the checkout and preserve comments and descriptions when reordering.
+
+---
+
 ## Project layout
 
 ```
@@ -74,29 +85,29 @@ src/
 │   ├── Factorial.java
 │   └── Utils.java
 └── test/java/com/oleynik/qa/workshop/testng/
+    ├── conditional/     # AssumeTest, AssumeBeforeClassTest
+    ├── ddt/             # StaticDataProviderTest, DynamicDataProviderTest, OuterDataProviderTest
+    ├── dependencies/    # DependenciesTest
+    ├── execution/order/ # ExecutionOrderTest
     ├── general/         # AssertTest, ExceptionTest, FixturesTest, HamcrestTest,
     │                    # TimeoutTest, DisabledTest, DescriptionTest
     ├── group/asserts/   # SoftAssertTest
-    ├── conditional/     # AssumeTest, AssumeBeforeClassTest
-    ├── ddt/             # StaticDataProviderTest, DynamicDataProviderTest, OuterDataProviderTest
-    ├── nested/          # NestedTest
     ├── grouping/        # GroupTest
-    ├── dependencies/    # DependenciesTest
-    ├── execution/order/ # ExecutionOrderTest
-    ├── suites/          # SuiteAnnotationsTest, TestAnnotationsTest,
-    │                    # SuiteListenerTest, ExecutionListenerTest
     ├── listeners/       # TestListenerTest, MethodListenerTest
+    ├── nested/          # NestedTest
+    ├── repeat/          # RepeatedTest
     ├── retry/           # RetryTest, RetryTransformerTest
-    └── repeat/          # RepeatedTest
+    └── suites/          # SuiteAnnotationsTest, TestAnnotationsTest,
+                         # SuiteListenerTest, ExecutionListenerTest
 
 src/test/resources/
     numbers.csv              # CSV data for data-driven tests
+    testnested.xml           # Run full package with inner classes
     testng1.xml              # Include/exclude specific methods
     testng2.xml              # Run fixed classes in parallel
     testnggroups1.xml        # Groups-of-groups
     testnggroups2.xml        # Smoke group only
     testngretrylistener.xml  # RetryTransformer as global listener
-    testnested.xml           # Run full package with inner classes
     testngsuites.xml         # ISuiteListener + IExecutionListener demo
 ```
 

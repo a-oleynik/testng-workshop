@@ -24,6 +24,17 @@ Related project: [JUnit Workshop](https://github.com/a-oleynik/junit-workshop) f
 
 ---
 
+## Documentation structure ordering
+
+All documented directory/file trees and source-layout inventories, including layout tables, must follow these rules:
+
+- At every hierarchy level, list directories first, then files.
+- Within each group, sort entries alphabetically by name, case-insensitively. Include dot-prefixed entries in the same ordering using their literal names.
+- Apply this ordering recursively, including nested directories and collapsed paths.
+- Check documented paths against the checkout and preserve comments and descriptions when reordering.
+
+---
+
 ## Source Layout
 
 ### Production code — `src/main/java/com/oleynik/qa/workshop/testng/`
@@ -42,30 +53,30 @@ Related project: [JUnit Workshop](https://github.com/a-oleynik/junit-workshop) f
 
 | Package            | Test class(es)                                                                                                  |
 |--------------------|-----------------------------------------------------------------------------------------------------------------|
-| `general/`         | `AssertTest`, `ExceptionTest`, `FixturesTest`, `HamcrestTest`, `TimeoutTest`, `DisabledTest`, `DescriptionTest` |
-| `group/asserts/`   | `SoftAssertTest`                                                                                                |
 | `conditional/`     | `AssumeTest`, `AssumeBeforeClassTest`                                                                           |
 | `ddt/`             | `StaticDataProviderTest`, `DynamicDataProviderTest`, `OuterDataProviderTest`                                    |
-| `nested/`          | `NestedTest`                                                                                                    |
-| `grouping/`        | `GroupTest`                                                                                                     |
 | `dependencies/`    | `DependenciesTest`                                                                                              |
 | `execution/order/` | `ExecutionOrderTest`                                                                                            |
-| `suites/`          | `SuiteAnnotationsTest`, `TestAnnotationsTest`, `SuiteListenerTest`, `ExecutionListenerTest`                     |
+| `general/`         | `AssertTest`, `ExceptionTest`, `FixturesTest`, `HamcrestTest`, `TimeoutTest`, `DisabledTest`, `DescriptionTest` |
+| `group/asserts/`   | `SoftAssertTest`                                                                                                |
+| `grouping/`        | `GroupTest`                                                                                                     |
 | `listeners/`       | `TestListenerTest`, `MethodListenerTest`                                                                        |
-| `retry/`           | `RetryTest`, `RetryTransformerTest`                                                                             |
+| `nested/`          | `NestedTest`                                                                                                    |
 | `repeat/`          | `RepeatedTest`                                                                                                  |
+| `retry/`           | `RetryTest`, `RetryTransformerTest`                                                                             |
+| `suites/`          | `SuiteAnnotationsTest`, `TestAnnotationsTest`, `SuiteListenerTest`, `ExecutionListenerTest`                     |
 
 ### Test resources — `src/test/resources/`
 
 | File                      | Purpose                                                         |
 |---------------------------|-----------------------------------------------------------------|
 | `numbers.csv`             | CSV data for `DynamicDataProviderTest`, `OuterDataProviderTest` |
+| `testnested.xml`          | Run full package including inner test classes                   |
 | `testng1.xml`             | Include / exclude specific methods per class                    |
 | `testng2.xml`             | Run fixed classes in parallel (`thread-count="2"`)              |
 | `testnggroups1.xml`       | Groups-of-groups (Smoke + Regression + Fail)                    |
 | `testnggroups2.xml`       | Smoke group only                                                |
 | `testngretrylistener.xml` | `RetryTransformer` registered as global listener                |
-| `testnested.xml`          | Run full package including inner test classes                   |
 | `testngsuites.xml`        | `ISuiteListener` + `IExecutionListener` demo                    |
 
 ---

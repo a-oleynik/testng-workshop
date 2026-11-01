@@ -19,6 +19,15 @@ It is the companion code for the IT Talk _"JUnit 6 vs TestNG 7"_.
 | Maven Surefire Plugin | 3.5.6   |
 | Build tool            | Maven   |
 
+## Documentation structure ordering
+
+All documented directory/file trees and source-layout inventories, including layout tables, must follow these rules:
+
+- At every hierarchy level, list directories first, then files.
+- Within each group, sort entries alphabetically by name, case-insensitively. Include dot-prefixed entries in the same ordering using their literal names.
+- Apply this ordering recursively, including nested directories and collapsed paths.
+- Check documented paths against the checkout and preserve comments and descriptions when reordering.
+
 ## Project Structure
 
 ```
@@ -33,28 +42,28 @@ src/main/java/com/oleynik/qa/workshop/testng/
   Utils.java       # Shared utilities (e.g. waitFor)
 
 src/test/java/com/oleynik/qa/workshop/testng/
+  conditional/     # AssumeTest, AssumeBeforeClassTest
+  ddt/             # StaticDataProviderTest, DynamicDataProviderTest, OuterDataProviderTest
+  dependencies/    # DependenciesTest
+  execution/order/ # ExecutionOrderTest
   general/         # AssertTest, ExceptionTest, FixturesTest, HamcrestTest,
                    # TimeoutTest, DisabledTest, DescriptionTest
   group/asserts/   # SoftAssertTest
-  conditional/     # AssumeTest, AssumeBeforeClassTest
-  ddt/             # StaticDataProviderTest, DynamicDataProviderTest, OuterDataProviderTest
-  nested/          # NestedTest (inner-class grouping)
   grouping/        # GroupTest
-  dependencies/    # DependenciesTest
-  execution/order/ # ExecutionOrderTest
-  suites/          # SuiteAnnotationsTest, TestAnnotationsTest, SuiteListenerTest, ExecutionListenerTest
   listeners/       # TestListenerTest, MethodListenerTest
-  retry/           # RetryTest, RetryTransformerTest
+  nested/          # NestedTest (inner-class grouping)
   repeat/          # RepeatedTest
+  retry/           # RetryTest, RetryTransformerTest
+  suites/          # SuiteAnnotationsTest, TestAnnotationsTest, SuiteListenerTest, ExecutionListenerTest
 
 src/test/resources/
   numbers.csv              # CSV test data for DynamicDataProviderTest / OuterDataProviderTest
+  testnested.xml           # Run full package including inner classes
   testng1.xml              # Include/exclude specific methods per class
   testng2.xml              # Run fixed set of classes in parallel
   testnggroups1.xml        # Groups-of-groups
   testnggroups2.xml        # Smoke group only
   testngretrylistener.xml  # RetryTransformer registered globally
-  testnested.xml           # Run full package including inner classes
   testngsuites.xml         # ISuiteListener + IExecutionListener + suite annotations
 ```
 

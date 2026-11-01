@@ -139,31 +139,96 @@ are detected, as in the companion JUnit Workshop.
 
 ## 📁 Project Structure
 
-```
+The tree shows the current checkout, with Java files grouped by package.
+Generated directories are ignored by Git; their contents depend on the build
+commands you run. The [Feature Map](#-feature-map) lists the test classes for each topic.
+
+```text
+.github/
+├── workflows/
+│   └── maven.yml                    # GitHub Actions CI — all tests and optional group selection
+└── copilot-instructions.md          # GitHub Copilot workspace instructions
+.gradle/                            # Generated local Gradle cache
+.junie/
+└── guidelines.md                    # JetBrains Junie project guidelines
+.mvn/
+└── wrapper/
+    └── maven-wrapper.properties     # Maven Wrapper configuration — Maven 3.9.12
+build/                              # Generated Gradle output
+├── classes/java/
+│   ├── main/                       # Compiled shared utilities, models, and listeners
+│   └── test/                       # Compiled tests
+├── libs/                           # Workshop utilities JAR after build
+├── reports/tests/
+│   ├── suiteTest/
+│   │   └── index.html        # HTML report for the selected XML suite
+│   └── test/
+│       └── index.html             # HTML report for ordinary test discovery
+├── resources/test/                 # Copied test resources
+└── test-results/
+    ├── suiteTest/                  # XML results for suiteTest
+    └── test/                       # XML results for test
+gradle/
+└── wrapper/
+    ├── gradle-wrapper.jar           # Committed Gradle Wrapper bootstrap JAR
+    └── gradle-wrapper.properties    # Gradle Wrapper configuration — Gradle 9.6.0
 src/
 ├── main/java/com/oleynik/qa/workshop/testng/
-│   ├── model/           # Domain model (User, MyDoubleWrapper)
-│   ├── annotations/     # Custom annotations (@Retries, @DataSource)
-│   ├── dataproviders/   # Reusable data provider (MyDataProvider)
-│   ├── listeners/       # ITestListener, IInvokedMethodListener, IAnnotationTransformer (RetryTransformer)
-│   ├── suites/          # ISuiteListener (MySuiteListener), IExecutionListener (MyExecutionListener)
-│   ├── retry/           # IRetryAnalyzer implementation (RetryAnalyzer)
-│   ├── Factorial.java   # Utility class used by data-driven tests
-│   └── Utils.java       # Shared test utilities (e.g. waitFor)
-└── test/java/com/oleynik/qa/workshop/testng/
-    ├── general/         # Core assertions, fixtures, exceptions, descriptions, timeouts
-    ├── group/asserts/   # Soft assertions
-    ├── conditional/     # Assumptions (AssertJ assumeThat)
-    ├── ddt/             # Data-driven tests (@DataProvider, CSV, external provider)
-    ├── nested/          # Inner-class test grouping
-    ├── grouping/        # TestNG groups (@Test(groups = …))
-    ├── dependencies/    # Test dependencies (dependsOnMethods / dependsOnGroups)
-    ├── execution/order/ # Test execution ordering (priority)
-    ├── listeners/       # Tests demonstrating listener hooks
-    ├── suites/          # Suite lifecycle: @BeforeSuite/@AfterSuite, @BeforeTest/@AfterTest,
-    │                    #   ISuiteListener, IExecutionListener
-    ├── retry/           # Retry strategies (IRetryAnalyzer, IAnnotationTransformer)
-    └── repeat/          # Repeated execution (invocationCount)
+│   ├── annotations/                 # Custom annotations (@Retries, @DataSource)
+│   ├── dataproviders/               # Reusable data provider (MyDataProvider)
+│   ├── listeners/                   # ITestListener, IInvokedMethodListener, IAnnotationTransformer (RetryTransformer)
+│   ├── model/                       # Domain models (User, MyDoubleWrapper)
+│   ├── retry/                       # IRetryAnalyzer implementation (RetryAnalyzer)
+│   ├── suites/                      # ISuiteListener (MySuiteListener), IExecutionListener (MyExecutionListener)
+│   ├── Factorial.java               # Utility class used by data-driven tests
+│   └── Utils.java                   # Shared test utilities (e.g. waitFor)
+└── test/
+    ├── java/com/oleynik/qa/workshop/testng/
+    │   ├── conditional/             # Assumptions (AssertJ assumeThat)
+    │   ├── ddt/                     # Data-driven tests (@DataProvider, CSV, external provider)
+    │   ├── dependencies/            # Test dependencies (dependsOnMethods / dependsOnGroups)
+    │   ├── execution/order/         # Test execution ordering (priority)
+    │   ├── general/                 # Core assertions, fixtures, exceptions, descriptions, timeouts
+    │   ├── group/asserts/           # Soft assertions (SoftAssertTest)
+    │   ├── grouping/                # TestNG groups (@Test(groups = …))
+    │   ├── listeners/               # Tests demonstrating listener hooks
+    │   ├── nested/                  # Inner-class test grouping
+    │   ├── repeat/                  # Repeated execution (invocationCount)
+    │   ├── retry/                   # Retry strategies (IRetryAnalyzer, IAnnotationTransformer)
+    │   └── suites/                  # @BeforeSuite/@AfterSuite, @BeforeTest/@AfterTest, ISuiteListener, IExecutionListener
+    └── resources/
+        ├── numbers.csv             # Input / expected factorial values for CSV data providers
+        ├── testnested.xml          # Discover nested tests by package
+        ├── testng1.xml             # Include / exclude specific test methods
+        ├── testng2.xml             # Run fixed classes in parallel
+        ├── testnggroups1.xml       # Groups-of-groups
+        ├── testnggroups2.xml       # Smoke group only
+        ├── testngretrylistener.xml # Register RetryTransformer globally for this suite
+        └── testngsuites.xml        # Suite / execution listeners and lifecycle annotations
+target/                             # Generated Maven output
+├── classes/                        # Compiled shared utilities, models, and listeners
+├── reports/
+│   └── surefire.html               # Standalone surefire-report:report output
+├── site/                           # Maven project website after site
+├── surefire-reports/
+│   ├── emailable-report.html       # TestNG emailable report
+│   ├── index.html                  # TestNG HTML report after Maven test
+│   ├── TEST-*.xml                  # JUnit-compatible XML results for CI
+│   └── testng-results.xml          # Native TestNG results
+└── test-classes/                   # Compiled tests and copied test resources
+
+.gitattributes                      # Wrapper script line endings
+.gitignore                          # Generated output, caches, and IDE exclusions
+AGENTS.md                           # AI agent instructions and verification commands
+build.gradle                        # Java 21, dependencies, test, suiteTest, and local publication
+gradlew                             # Gradle Wrapper for Unix
+gradlew.bat                         # Gradle Wrapper for Windows
+LICENSE                             # MIT license
+mvnw                                # Maven Wrapper for Unix
+mvnw.cmd                            # Maven Wrapper for Windows
+pom.xml                             # Maven dependencies, Lombok processor, and Surefire configuration
+README.md                           # Project documentation and run commands
+settings.gradle                     # Gradle project name
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
