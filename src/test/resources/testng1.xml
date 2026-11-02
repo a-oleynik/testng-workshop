@@ -8,9 +8,9 @@
                     <include name="assert_equals_multiplication_test"/>
                 </methods>
             </class>
-            <class name="com.oleynik.qa.workshop.testng.general.FixturesTest">
+            <class name="com.oleynik.qa.workshop.testng.general.LifecycleTest">
                 <methods>
-                    <exclude name="fixtures_the_first_test"/>
+                    <exclude name="lifecycle_the_first_test"/>
                 </methods>
             </class>
         </classes>

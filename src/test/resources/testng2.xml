@@ -3,7 +3,7 @@
 <suite name="All Tests" parallel="classes" thread-count="2" verbose="5" >
     <test name="Regression" preserve-order="false">
         <classes>
-            <class name="com.oleynik.qa.workshop.testng.general.FixturesTest">
+            <class name="com.oleynik.qa.workshop.testng.general.LifecycleTest">
             </class>
             <class name="com.oleynik.qa.workshop.testng.ddt.StaticDataProviderTest">
             </class>

@@ -178,7 +178,7 @@ src/
 │   ├── annotations/                 # Custom annotations (@Retries, @DataSource)
 │   ├── dataproviders/               # Reusable data provider (MyDataProvider)
 │   ├── listeners/                   # ITestListener, IInvokedMethodListener, IAnnotationTransformer (RetryTransformer)
-│   ├── model/                       # Domain models (User, MyDoubleWrapper)
+│   ├── model/                       # Domain models (MyDoubleWrapper, ShoppingCart, User)
 │   ├── retry/                       # IRetryAnalyzer implementation (RetryAnalyzer)
 │   ├── suites/                      # ISuiteListener (MySuiteListener), IExecutionListener (MyExecutionListener)
 │   ├── Factorial.java               # Utility class used by data-driven tests
@@ -189,7 +189,8 @@ src/
     │   ├── ddt/                     # Data-driven tests (@DataProvider, CSV, external provider)
     │   ├── dependencies/            # Test dependencies (dependsOnMethods / dependsOnGroups)
     │   ├── execution/order/         # Test execution ordering (priority)
-    │   ├── general/                 # Core assertions, fixtures, exceptions, descriptions, timeouts
+    │   ├── fixtures/                # Fresh / Shared Fixture; Inline / Implicit Setup
+    │   ├── general/                 # Core assertions, lifecycle, exceptions, descriptions, timeouts
     │   ├── group/asserts/           # Soft assertions (SoftAssertTest)
     │   ├── grouping/                # TestNG groups (@Test(groups = …))
     │   ├── listeners/               # Tests demonstrating listener hooks
@@ -240,35 +241,36 @@ settings.gradle                      # Gradle project name
 
 > 💡 **New to TestNG?** Follow the [Learning Path](#-beginner-learning-path) for a recommended study order.
 
-| Package / folder  | Feature demonstrated                                                                                                                       | Test class(es)            |
-|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------|---------------------------|
-| `general`         | Basic assertions (`assertEquals`, `assertTrue`, `assertNull`, `assertSame`, …)                                                             | `AssertTest`              |
-| `general`         | Exception testing (`expectedExceptions`, `expectedExceptionsMessageRegExp`)                                                                | `ExceptionTest`           |
-| `general`         | Test fixtures (`@BeforeSuite`, `@AfterSuite`, `@BeforeClass`, `@AfterClass`, `@BeforeTest`, `@AfterTest`, `@BeforeMethod`, `@AfterMethod`) | `FixturesTest`            |
-| `general`         | Hamcrest matchers                                                                                                                          | `HamcrestTest`            |
-| `general`         | Timeouts (`timeOut` attribute on `@Test`)                                                                                                  | `TimeoutTest`             |
-| `general`         | Disabling & skipping tests (`enabled = false`, `SkipException`)                                                                            | `DisabledTest`            |
-| `general`         | Test descriptions (`description` attribute on `@Test`)                                                                                     | `DescriptionTest`         |
-| `group/asserts`   | Soft assertions (`SoftAssert`)                                                                                                             | `SoftAssertTest`          |
-| `conditional`     | Assumptions via AssertJ (`assumeThat`) per method                                                                                          | `AssumeTest`              |
-| `conditional`     | Assumptions in `@BeforeClass` to skip entire class                                                                                         | `AssumeBeforeClassTest`   |
-| `ddt`             | Static inline `@DataProvider`                                                                                                              | `StaticDataProviderTest`  |
-| `ddt`             | Dynamic CSV-file `@DataProvider` (Iterator-based)                                                                                          | `DynamicDataProviderTest` |
-| `ddt`             | External `@DataProvider` class (`dataProviderClass`)                                                                                       | `OuterDataProviderTest`   |
-| `nested`          | Inner test classes grouped under a parent class                                                                                            | `NestedTest`              |
-| `grouping`        | Groups (`@Test(groups = …)`), `@BeforeGroups`, `@AfterGroups`                                                                              | `GroupTest`               |
-| `dependencies`    | Method & group dependencies (`dependsOnMethods`, `dependsOnGroups`)                                                                        | `DependenciesTest`        |
-| `execution/order` | Test execution ordering via `priority` attribute                                                                                           | `ExecutionOrderTest`      |
-| `suites`          | Suite lifecycle annotations (`@BeforeSuite`, `@AfterSuite`)                                                                                | `SuiteAnnotationsTest`    |
-| `suites`          | Test-block lifecycle annotations (`@BeforeTest`, `@AfterTest`)                                                                             | `TestAnnotationsTest`     |
-| `suites`          | `ISuiteListener` — suite-scoped setup/teardown via listener                                                                                | `SuiteListenerTest`       |
-| `suites`          | `IExecutionListener` — execution-wide lifecycle (registrable via `@Listeners`, XML, or `ServiceLoader`)                                    | `ExecutionListenerTest`   |
-| `listeners`       | `ITestListener` — observe test start, success, failure, skip                                                                               | `TestListenerTest`        |
-| `listeners`       | `IInvokedMethodListener` — intercept before/after every method invocation                                                                  | `MethodListenerTest`      |
-| `listeners`       | `TestListenerAdapter` — extend the adapter and override only the callbacks you need                                                        | `TestListenerTest`        |
-| `retry`           | Retry with `IRetryAnalyzer` + custom `@Retries` annotation                                                                                 | `RetryTest`               |
-| `retry`           | Retry with `IAnnotationTransformer` (`RetryTransformer`) applied globally via XML                                                          | `RetryTransformerTest`    |
-| `repeat`          | Repeated execution (`invocationCount` attribute on `@Test`)                                                                                | `RepeatedTest`            |
+| Package / folder  | Feature demonstrated                                                                                                                        | Test class(es)                                                  |
+|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|
+| `general`         | Basic assertions (`assertEquals`, `assertTrue`, `assertNull`, `assertSame`, …)                                                              | `AssertTest`                                                    |
+| `general`         | Exception testing (`expectedExceptions`, `expectedExceptionsMessageRegExp`)                                                                 | `ExceptionTest`                                                 |
+| `general`         | Test lifecycle (`@BeforeSuite`, `@AfterSuite`, `@BeforeClass`, `@AfterClass`, `@BeforeTest`, `@AfterTest`, `@BeforeMethod`, `@AfterMethod`) | `LifecycleTest`                                                 |
+| `fixtures`        | Fresh Fixture, Shared Fixture, Inline Setup, and Implicit Setup                                                                             | `InlineFixtureTest`, `ImplicitFixtureTest`, `SharedFixtureTest` |
+| `general`         | Hamcrest matchers                                                                                                                           | `HamcrestTest`                                                  |
+| `general`         | Timeouts (`timeOut` attribute on `@Test`)                                                                                                   | `TimeoutTest`                                                   |
+| `general`         | Disabling & skipping tests (`enabled = false`, `SkipException`)                                                                             | `DisabledTest`                                                  |
+| `general`         | Test descriptions (`description` attribute on `@Test`)                                                                                      | `DescriptionTest`                                               |
+| `group/asserts`   | Soft assertions (`SoftAssert`)                                                                                                              | `SoftAssertTest`                                                |
+| `conditional`     | Assumptions via AssertJ (`assumeThat`) per method                                                                                           | `AssumeTest`                                                    |
+| `conditional`     | Assumptions in `@BeforeClass` to skip entire class                                                                                          | `AssumeBeforeClassTest`                                         |
+| `ddt`             | Static inline `@DataProvider`                                                                                                               | `StaticDataProviderTest`                                        |
+| `ddt`             | Dynamic CSV-file `@DataProvider` (Iterator-based)                                                                                           | `DynamicDataProviderTest`                                       |
+| `ddt`             | External `@DataProvider` class (`dataProviderClass`)                                                                                        | `OuterDataProviderTest`                                         |
+| `nested`          | Inner test classes grouped under a parent class                                                                                             | `NestedTest`                                                    |
+| `grouping`        | Groups (`@Test(groups = …)`), `@BeforeGroups`, `@AfterGroups`                                                                               | `GroupTest`                                                     |
+| `dependencies`    | Method & group dependencies (`dependsOnMethods`, `dependsOnGroups`)                                                                         | `DependenciesTest`                                              |
+| `execution/order` | Test execution ordering via `priority` attribute                                                                                            | `ExecutionOrderTest`                                            |
+| `suites`          | Suite lifecycle annotations (`@BeforeSuite`, `@AfterSuite`)                                                                                 | `SuiteAnnotationsTest`                                          |
+| `suites`          | Test-block lifecycle annotations (`@BeforeTest`, `@AfterTest`)                                                                              | `TestAnnotationsTest`                                           |
+| `suites`          | `ISuiteListener` — suite-scoped setup/teardown via listener                                                                                 | `SuiteListenerTest`                                             |
+| `suites`          | `IExecutionListener` — execution-wide lifecycle (registrable via `@Listeners`, XML, or `ServiceLoader`)                                     | `ExecutionListenerTest`                                         |
+| `listeners`       | `ITestListener` — observe test start, success, failure, skip                                                                                | `TestListenerTest`                                              |
+| `listeners`       | `IInvokedMethodListener` — intercept before/after every method invocation                                                                   | `MethodListenerTest`                                            |
+| `listeners`       | `TestListenerAdapter` — extend the adapter and override only the callbacks you need                                                         | `TestListenerTest`                                              |
+| `retry`           | Retry with `IRetryAnalyzer` + custom `@Retries` annotation                                                                                  | `RetryTest`                                                     |
+| `retry`           | Retry with `IAnnotationTransformer` (`RetryTransformer`) applied globally via XML                                                           | `RetryTransformerTest`                                          |
+| `repeat`          | Repeated execution (`invocationCount` attribute on `@Test`)                                                                                 | `RepeatedTest`                                                  |
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
@@ -286,59 +288,103 @@ Learn `assertEquals`, `assertTrue`, `assertNull`, `assertSame`, `assertNotSame`,
 
 ### 2. Test lifecycle
 
-`FixturesTest`
+[`LifecycleTest`](src/test/java/com/oleynik/qa/workshop/testng/general/LifecycleTest.java)
 
-Understand the full TestNG fixture hierarchy: `@BeforeSuite` → `@BeforeTest` → `@BeforeClass` → `@BeforeMethod` (and their `After*` counterparts).
+Understand the scopes of TestNG configuration methods: `@BeforeSuite` → `@BeforeTest` → `@BeforeClass` → `@BeforeMethod`, with the corresponding `@After*` callbacks. `@BeforeTest` belongs to an XML `<test>` block; `@BeforeMethod` runs before each test method.
 
-### 3. Exception testing
+This example logs lifecycle callbacks. The fixture examples in the next topic show the state those callbacks can prepare. `LifecycleTest` runs its test methods in one thread to make the trace easier to follow; the rest of the workshop keeps its parallel defaults.
+
+```bash
+./mvnw clean test -Dtest=LifecycleTest
+./gradlew clean test --tests "LifecycleTest"
+```
+
+### 3. Fixtures
+
+[`InlineFixtureTest`](src/test/java/com/oleynik/qa/workshop/testng/fixtures/InlineFixtureTest.java),
+[`ImplicitFixtureTest`](src/test/java/com/oleynik/qa/workshop/testng/fixtures/ImplicitFixtureTest.java),
+[`SharedFixtureTest`](src/test/java/com/oleynik/qa/workshop/testng/fixtures/SharedFixtureTest.java)
+
+A **fixture** is the prepared state, data, objects, or resources needed by a test.
+Lifecycle callbacks such as `@BeforeMethod` prepare it; the callbacks are the setup mechanism.
+The examples use the same small [`ShoppingCart`](src/main/java/com/oleynik/qa/workshop/testng/model/ShoppingCart.java) and cart scenarios as the companion JUnit Workshop. Prices and totals use integer minor currency units.
+
+| Concept            | What it describes                                          | Example                                                                                            |
+|--------------------|------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
+| **Fresh Fixture**  | State created separately for each test.                    | Every test gets a new empty `ShoppingCart`.                                                        |
+| **Shared Fixture** | A fixture, or part of it, reused by several tests.         | `SharedFixtureTest` creates one immutable price catalog per test-class instance in `@BeforeClass`. |
+| **Inline Setup**   | Preparation written directly inside the test method.       | `InlineFixtureTest` constructs the cart in each test.                                              |
+| **Implicit Setup** | Common preparation invoked automatically before each test. | `ImplicitFixtureTest` and `SharedFixtureTest` create their carts in `@BeforeMethod`.               |
+
+Fresh/Shared Fixture describes reuse; Inline/Implicit Setup describes how preparation is invoked.
+The first two classes compare the same cart scenarios with different setup locations.
+Their scenario-specific prices and quantities stay visible in each test. All three examples
+assert an initial cart total of zero and then expected totals of 400 or 450.
+The shared example combines reusable read-only reference data with a fresh mutable cart,
+so tests do not depend on each other's changes or execution order.
+
+TestNG reuses a test-class instance across its methods. With the workshop's `parallel=methods` default, replacing a cart field in `@BeforeMethod` needs isolation.
+`ImplicitFixtureTest` and `SharedFixtureTest` use class-level `@Test(singleThreaded = true)`
+so their test methods run in one thread; `@BeforeMethod` still creates a fresh cart for each test.
+The global `methods/3` configuration is unchanged.
+
+These in-memory fixtures need no explicit teardown; external resources may need cleanup in
+the matching `@After*` callback.
+
+```bash
+./mvnw clean test -Dtest=InlineFixtureTest,ImplicitFixtureTest,SharedFixtureTest
+./gradlew clean test --tests "InlineFixtureTest" --tests "ImplicitFixtureTest" --tests "SharedFixtureTest"
+```
+
+### 4. Exception testing
 
 `ExceptionTest`
 
 Use `expectedExceptions` and `expectedExceptionsMessageRegExp` on `@Test` to assert thrown exceptions.
 
-### 4. Disabling & skipping tests
+### 5. Disabling & skipping tests
 
 `DisabledTest`
 
 Disable tests with `@Test(enabled = false)` or skip them dynamically by throwing `SkipException`.
 
-### 5. Test descriptions
+### 6. Test descriptions
 
 `DescriptionTest`
 
 Add human-readable descriptions to tests with `@Test(description = "…")` for better report output.
 
-### 6. Soft assertions
+### 7. Soft assertions
 
 `SoftAssertTest`
 
 Collect all assertion failures with `SoftAssert` before reporting — no early bail-out.
 
-### 7. Assumptions
+### 8. Assumptions
 
 `AssumeTest`
 
 Skip tests dynamically when preconditions aren't met using AssertJ's `assumeThat`.
 
-### 8. Parameterized tests
+### 9. Parameterized tests
 
 `StaticDataProviderTest`
 
 Drive one test method with multiple data rows using an inline `@DataProvider`.
 
-### 9. Groups
+### 10. Groups
 
 `GroupTest`
 
 Mark tests as `Smoke` or `Regression` and run subsets from the command line or via XML suites.
 
-### 10. Suite & test-block lifecycle
+### 11. Suite & test-block lifecycle
 
 `SuiteAnnotationsTest`, `TestAnnotationsTest`
 
-See `@BeforeSuite` / `@AfterSuite` run once around the entire suite, and `@BeforeTest` / `@AfterTest` run once per `<test>` block in a `testng.xml` file. Having seen XML suites in step 9, the distinction between `@BeforeTest` and `@BeforeClass` now makes full sense — and this topic bridges directly into the Advanced Learning Path section.
+See `@BeforeSuite` / `@AfterSuite` run once around the entire suite, and `@BeforeTest` / `@AfterTest` run once per `<test>` block in a `testng.xml` file. Having seen XML suites in step 10, the distinction between `@BeforeTest` and `@BeforeClass` now makes full sense — and this topic bridges directly into the Advanced Learning Path section.
 
-### 11. Surefire HTML Report Generation
+### 12. Surefire HTML Report Generation
 
 ```bash
 ./mvnw clean surefire-report:report
@@ -355,7 +401,7 @@ See `@BeforeSuite` / `@AfterSuite` run once around the entire suite, and `@Befor
 For this test-only project, `./gradlew clean test` provides the test-report equivalent
 of either Maven command above. It does not generate the Maven project website.
 
-**Run the whole beginner suite:**
+**Run all workshop tests:**
 
 ```bash
 ./mvnw clean test
@@ -374,7 +420,7 @@ These topics assume familiarity with TestNG basics.
 
 `SuiteAnnotationsTest`, `TestAnnotationsTest`, `SuiteListenerTest`, `ExecutionListenerTest` → `suites/` package
 
-TestNG provides three strategies for running code at suite scope, from simplest to most powerful:
+TestNG provides callbacks at suite scope and at the enclosing execution scope:
 
 | Strategy                       | Class                                           | When to use                                                                                                   |
 |--------------------------------|-------------------------------------------------|---------------------------------------------------------------------------------------------------------------|
@@ -382,7 +428,7 @@ TestNG provides three strategies for running code at suite scope, from simplest 
 | `ISuiteListener`               | `SuiteListenerTest` + `MySuiteListener`         | Infrastructure code outside the test hierarchy; fires per suite                                               |
 | `IExecutionListener`           | `ExecutionListenerTest` + `MyExecutionListener` | Fires once per TestNG execution, across all its suites; registrable via `@Listeners`, XML, or `ServiceLoader` |
 
-**Full fixture execution order:**
+**Lifecycle callback order:**
 ```
 IExecutionListener.onExecutionStart()       ← once per TestNG execution
   ISuiteListener.onStart(suite)             ← once per suite
@@ -397,8 +443,7 @@ IExecutionListener.onExecutionStart()       ← once per TestNG execution
 IExecutionListener.onExecutionFinish()
 ```
 
-> **JUnit 5 equivalent:** `@BeforeAll` / `@AfterAll` (annotation-based) or a custom extension
-> implementing `BeforeAllCallback` / `AfterAllCallback` (listener-based).
+> **JUnit comparison:** JUnit Platform Suite API provides `@BeforeSuite` / `@AfterSuite` for a suite entry point. Jupiter's `@BeforeAll` / `@AfterAll` and `BeforeAllCallback` / `AfterAllCallback` have class-level scope; placing them in a base class or registering an extension through ServiceLoader does not make them suite-wide.
 
 **`@BeforeTest` / `@AfterTest`** (`TestAnnotationsTest`) fire once per `<test>` XML element — coarser than `@BeforeClass` but finer than `@BeforeSuite`. They are TestNG-specific and have no direct JUnit 5 counterpart.
 

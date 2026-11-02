@@ -32,12 +32,14 @@ import org.testng.annotations.Test;
  * the listener output:
  *
  * <pre>
- * mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testngsuites.xml
+ * ./mvnw clean test -Dsurefire.suiteXmlFiles=src/test/resources/testngsuites.xml
+ * ./gradlew clean suiteTest -Psuite=src/test/resources/testngsuites.xml
  * </pre>
  *
- * <p><b>JUnit 5 equivalent:</b> there is no direct equivalent; the closest
- * approaches are a {@code LauncherSessionListener} or a JVM-level extension
- * registered via {@code ServiceLoader}.
+ * <p><b>JUnit comparison:</b> a {@code LauncherSessionListener} follows
+ * launcher-session boundaries rather than necessarily a single execution.
+ * Registering a Jupiter extension through {@code ServiceLoader} does not
+ * make its callbacks execution-wide.
  *
  * @see MyExecutionListener
  * @see SuiteListenerTest

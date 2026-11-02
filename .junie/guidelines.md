@@ -44,27 +44,28 @@ All documented directory/file trees and source-layout inventories, including lay
 | `annotations/`   | `@Retries(limit)`, `@DataSource(path)` — custom meta-annotations                                                                                                                   |
 | `dataproviders/` | `MyDataProvider` — reusable external `@DataProvider` class                                                                                                                         |
 | `listeners/`     | `MyTestListener` (`ITestListener`), `MyMethodListener` (`IInvokedMethodListener`), `MyExtendedTestListener` (`TestListenerAdapter`), `RetryTransformer` (`IAnnotationTransformer`) |
-| `model/`         | `User`, `MyDoubleWrapper` — Lombok-built domain objects                                                                                                                            |
+| `model/`         | `MyDoubleWrapper`, `ShoppingCart`, `User` — Lombok domain models plus a minimal cart                                                                                               |
 | `retry/`         | `RetryAnalyzer` — `IRetryAnalyzer` implementation                                                                                                                                  |
 | `suites/`        | `MySuiteListener` (`ISuiteListener`), `MyExecutionListener` (`IExecutionListener`)                                                                                                 |
 | root             | `Factorial.java`, `Utils.java`                                                                                                                                                     |
 
 ### Test code — `src/test/java/com/oleynik/qa/workshop/testng/`
 
-| Package            | Test class(es)                                                                                                  |
-|--------------------|-----------------------------------------------------------------------------------------------------------------|
-| `conditional/`     | `AssumeTest`, `AssumeBeforeClassTest`                                                                           |
-| `ddt/`             | `StaticDataProviderTest`, `DynamicDataProviderTest`, `OuterDataProviderTest`                                    |
-| `dependencies/`    | `DependenciesTest`                                                                                              |
-| `execution/order/` | `ExecutionOrderTest`                                                                                            |
-| `general/`         | `AssertTest`, `ExceptionTest`, `FixturesTest`, `HamcrestTest`, `TimeoutTest`, `DisabledTest`, `DescriptionTest` |
-| `group/asserts/`   | `SoftAssertTest`                                                                                                |
-| `grouping/`        | `GroupTest`                                                                                                     |
-| `listeners/`       | `TestListenerTest`, `MethodListenerTest`                                                                        |
-| `nested/`          | `NestedTest`                                                                                                    |
-| `repeat/`          | `RepeatedTest`                                                                                                  |
-| `retry/`           | `RetryTest`, `RetryTransformerTest`                                                                             |
-| `suites/`          | `SuiteAnnotationsTest`, `TestAnnotationsTest`, `SuiteListenerTest`, `ExecutionListenerTest`                     |
+| Package            | Test class(es)                                                                                                   |
+|--------------------|------------------------------------------------------------------------------------------------------------------|
+| `conditional/`     | `AssumeTest`, `AssumeBeforeClassTest`                                                                            |
+| `ddt/`             | `StaticDataProviderTest`, `DynamicDataProviderTest`, `OuterDataProviderTest`                                     |
+| `dependencies/`    | `DependenciesTest`                                                                                               |
+| `execution/order/` | `ExecutionOrderTest`                                                                                             |
+| `fixtures/`        | `ImplicitFixtureTest`, `InlineFixtureTest`, `SharedFixtureTest`                                                  |
+| `general/`         | `AssertTest`, `ExceptionTest`, `LifecycleTest`, `HamcrestTest`, `TimeoutTest`, `DisabledTest`, `DescriptionTest` |
+| `group/asserts/`   | `SoftAssertTest`                                                                                                 |
+| `grouping/`        | `GroupTest`                                                                                                      |
+| `listeners/`       | `TestListenerTest`, `MethodListenerTest`                                                                         |
+| `nested/`          | `NestedTest`                                                                                                     |
+| `repeat/`          | `RepeatedTest`                                                                                                   |
+| `retry/`           | `RetryTest`, `RetryTransformerTest`                                                                              |
+| `suites/`          | `SuiteAnnotationsTest`, `TestAnnotationsTest`, `SuiteListenerTest`, `ExecutionListenerTest`                      |
 
 ### Test resources — `src/test/resources/`
 
@@ -78,6 +79,16 @@ All documented directory/file trees and source-layout inventories, including lay
 | `testnggroups2.xml`       | Smoke group only                                                |
 | `testngretrylistener.xml` | `RetryTransformer` registered as global listener                |
 | `testngsuites.xml`        | `ISuiteListener` + `IExecutionListener` demo                    |
+
+---
+
+## Fixtures and lifecycle
+
+- A fixture is the state, data, and objects required by a test; setup prepares it. Lifecycle callbacks control when setup and cleanup run.
+- Fresh Fixture / Shared Fixture describes whether state is recreated or reused. Inline Setup / Implicit Setup describes how preparation is invoked.
+- Keep InlineFixtureTest and ImplicitFixtureTest scenarios equivalent. Both use a fresh ShoppingCart; scenario-specific prices and quantities stay in the tests.
+- ImplicitFixtureTest and SharedFixtureTest use cart fields and class-level @Test(singleThreaded = true) to prevent races under parallel=methods. Preserve the global methods/3 defaults.
+- SharedFixtureTest reuses an immutable price catalog from @BeforeClass and creates a fresh cart per test in @BeforeMethod. Tests must also pass individually without an execution-order dependency.
 
 ---
 
@@ -102,7 +113,7 @@ All documented directory/file trees and source-layout inventories, including lay
 - Do **not** introduce static mutable state in test classes
 
 ### Logging / output
-- `System.out.println` is intentional in fixture and listener methods — it demonstrates execution order visually
+- `System.out.println` is intentional in lifecycle and listener methods — it demonstrates execution order visually
 - Do not replace with a logger in these cases
 
 ---
@@ -154,15 +165,16 @@ mvn clean test
 When generating or modifying test examples, follow this conceptual progression:
 
 1. Basic assertions (`AssertTest`)
-2. Test lifecycle / fixtures (`FixturesTest`)
-3. Exception testing (`ExceptionTest`)
-4. Disabling & skipping (`DisabledTest`)
-5. Test descriptions (`DescriptionTest`)
-6. Hamcrest matchers (`HamcrestTest`)
+2. Test lifecycle (`LifecycleTest`)
+3. Fixtures — Fresh / Shared Fixture and Inline / Implicit Setup (`InlineFixtureTest`, `ImplicitFixtureTest`, `SharedFixtureTest`)
+4. Exception testing (`ExceptionTest`)
+5. Disabling & skipping (`DisabledTest`)
+6. Test descriptions (`DescriptionTest`)
 7. Soft assertions (`SoftAssertTest`)
 8. Assumptions (`AssumeTest`)
 9. Parameterized tests / `@DataProvider` (`StaticDataProviderTest`)
 10. Groups (`GroupTest`)
 11. Suite & test-block lifecycle — requires XML suite understanding (`SuiteAnnotationsTest`, `TestAnnotationsTest`)
-12. Advanced: listeners, retry strategies, parallel execution, XML suite orchestration
+12. HTML report generation with Maven or Gradle
+13. Advanced: listeners, retry strategies, parallel execution, XML suite orchestration, Hamcrest matchers (`HamcrestTest`)
 

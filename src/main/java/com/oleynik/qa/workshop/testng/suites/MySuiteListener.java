@@ -12,9 +12,10 @@ import org.testng.ISuiteListener;
  * starting / stopping an external service, initialising a shared database
  * connection pool, or writing a custom suite-level report.
  *
- * <p><b>JUnit 5 equivalent:</b> a class-level extension implementing
- * {@code BeforeAllCallback} / {@code AfterAllCallback} and registered with
- * {@code @RegisterExtension} or via {@code ServiceLoader}.
+ * <p><b>JUnit comparison:</b> JUnit Platform suite hooks provide suite-level
+ * setup and teardown. Jupiter's {@code BeforeAllCallback} /
+ * {@code AfterAllCallback} operate at class scope; registering an extension
+ * through {@code ServiceLoader} does not make those callbacks suite-wide.
  *
  * <h2>Registration</h2>
  * <ul>
@@ -25,9 +26,9 @@ import org.testng.ISuiteListener;
  *       every suite in the run is covered (see {@code testngsuites.xml}).</li>
  * </ul>
  *
- * <h2>Fixture execution order</h2>
+ * <h2>Lifecycle callback order</h2>
  * <pre>
- * IExecutionListener.onExecutionStart()     ← process-wide, fires once
+ * IExecutionListener.onExecutionStart()     ← once per TestNG execution
  *   ISuiteListener.onStart(suite)           ← fires per suite
  *     @BeforeSuite                          ← annotation-based, once per suite
  *       @BeforeTest                         ← once per &lt;test&gt; block in XML

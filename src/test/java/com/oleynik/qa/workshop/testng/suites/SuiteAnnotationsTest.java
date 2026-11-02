@@ -12,16 +12,16 @@ import org.testng.annotations.Test;
  * annotations - the simplest way to execute global setup and teardown once
  * per TestNG suite, directly from a test class.
  *
- * <p>{@code @BeforeSuite} runs before any test class in the suite is
- * instantiated; {@code @AfterSuite} runs after the last test method across
- * all classes in the suite has completed.
+ * <p>{@code @BeforeSuite} runs before the suite's tests execute. Test-class
+ * instances may already exist when it runs. {@code @AfterSuite} runs after
+ * the tests across the suite's classes have completed.
  *
- * <p><b>JUnit 5 equivalent:</b> {@code @BeforeAll} / {@code @AfterAll} in a
- * shared base class, or a class-level extension implementing
- * {@code BeforeAllCallback} / {@code AfterAllCallback} registered with
- * {@code @RegisterExtension}.
+ * <p><b>JUnit comparison:</b> JUnit Platform Suite API provides suite hooks
+ * named {@code @BeforeSuite} / {@code @AfterSuite}. Jupiter's
+ * {@code @BeforeAll} / {@code @AfterAll} and the corresponding extension
+ * callbacks have class-level scope, including when inherited from a base class.
  *
- * <h2>Fixture execution order</h2>
+ * <h2>Lifecycle callback order</h2>
  * <pre>
  * @BeforeSuite   (once per suite)
  *   @BeforeTest  (once per &lt;test&gt; block in testng.xml)
@@ -34,10 +34,10 @@ import org.testng.annotations.Test;
  * @AfterSuite    (once per suite)
  * </pre>
  *
- * <p><b>Tip:</b> Only one {@code @BeforeSuite} method fires per suite,
- * even when multiple test classes define one - TestNG picks the first it
- * finds. Prefer {@link MySuiteListener} for shared, infrastructure-level
- * setup that should reliably run regardless of which class is loaded first.
+ * <p>Multiple test classes may declare suite configuration methods. Do not
+ * rely on the order of independent hooks; express required dependencies
+ * explicitly. {@link MySuiteListener} demonstrates suite infrastructure
+ * outside the test-class hierarchy.
  *
  * @see TestAnnotationsTest
  * @see MySuiteListener

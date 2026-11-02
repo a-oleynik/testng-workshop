@@ -35,7 +35,7 @@ src/main/java/com/oleynik/qa/workshop/testng/
   annotations/     # @Retries, @DataSource — custom annotations
   dataproviders/   # MyDataProvider — reusable external @DataProvider
   listeners/       # MyTestListener, MyMethodListener, MyExtendedTestListener, RetryTransformer
-  model/           # User, MyDoubleWrapper — domain model (Lombok builders)
+  model/           # MyDoubleWrapper, ShoppingCart, User — Lombok domain models plus a minimal cart
   retry/           # RetryAnalyzer — IRetryAnalyzer implementation
   suites/          # MySuiteListener (ISuiteListener), MyExecutionListener (IExecutionListener)
   Factorial.java   # Utility used by data-driven tests
@@ -46,7 +46,8 @@ src/test/java/com/oleynik/qa/workshop/testng/
   ddt/             # StaticDataProviderTest, DynamicDataProviderTest, OuterDataProviderTest
   dependencies/    # DependenciesTest
   execution/order/ # ExecutionOrderTest
-  general/         # AssertTest, ExceptionTest, FixturesTest, HamcrestTest,
+  fixtures/        # ImplicitFixtureTest, InlineFixtureTest, SharedFixtureTest
+  general/         # AssertTest, ExceptionTest, LifecycleTest, HamcrestTest,
                    # TimeoutTest, DisabledTest, DescriptionTest
   group/asserts/   # SoftAssertTest
   grouping/        # GroupTest
@@ -75,7 +76,15 @@ src/test/resources/
 - **Assertions**: Use `org.testng.Assert` in test classes. Use AssertJ `assertThat` in `HamcrestTest` / assumption tests. Do **not** mix assertion libraries within the same test class.
 - **Lombok**: `@Builder`, `@Data`, `@AllArgsConstructor` used in model classes. Lombok must be on the annotation processor path — do not remove it from `pom.xml`.
 - **No `public` modifier** on test methods unless required (TestNG does not require it).
-- **System.out.println** is used intentionally in fixture and listener methods to demonstrate execution order — do not replace with a logger.
+- **System.out.println** is used intentionally in lifecycle and listener methods to demonstrate execution order — do not replace with a logger.
+
+## Fixtures and lifecycle
+
+- A fixture is the state, data, and objects required by a test; setup prepares it. Lifecycle callbacks control when setup and cleanup run.
+- Fresh Fixture / Shared Fixture describes whether state is recreated or reused. Inline Setup / Implicit Setup describes how preparation is invoked.
+- Keep InlineFixtureTest and ImplicitFixtureTest scenarios equivalent. Both use a fresh ShoppingCart; scenario-specific prices and quantities stay in the tests.
+- ImplicitFixtureTest and SharedFixtureTest use cart fields and class-level @Test(singleThreaded = true) to prevent races under parallel=methods. Preserve the global methods/3 defaults.
+- SharedFixtureTest reuses an immutable price catalog from @BeforeClass and creates a fresh cart per test in @BeforeMethod. Tests must also pass individually without an execution-order dependency.
 
 ## Key TestNG Patterns Used
 

@@ -14,16 +14,14 @@ import org.testng.annotations.Test;
  *       finished, including teardown methods.</li>
  * </ul>
  *
- * <p>Unlike {@code @BeforeSuite} / {@code @AfterSuite} annotations (which
- * live inside a test class and can conflict when multiple classes define
- * them), {@code ISuiteListener} is infrastructure-level code that stays
- * outside the test class hierarchy. This makes it the preferred approach for
- * shared setup such as starting a database container or opening a browser
- * session that must be available to every test in the suite.
+ * <p>{@code ISuiteListener} keeps infrastructure-level setup outside the
+ * test-class hierarchy. Suite annotations may also be declared in multiple
+ * test classes. Choose a listener when that separation suits the resource
+ * owner, and keep any shared resource safe for the suite's parallel execution.
  *
- * <p><b>JUnit 5 equivalent:</b> a custom extension implementing
- * {@code BeforeAllCallback} / {@code AfterAllCallback} and registered via
- * {@code @RegisterExtension} or {@code ServiceLoader}.
+ * <p><b>JUnit comparison:</b> JUnit Platform suite hooks have suite scope.
+ * Jupiter's {@code BeforeAllCallback} / {@code AfterAllCallback} have
+ * class scope, including when the extension is discovered via {@code ServiceLoader}.
  *
  * <h2>Registration options</h2>
  * <ul>

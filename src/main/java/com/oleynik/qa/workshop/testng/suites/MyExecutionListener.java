@@ -3,7 +3,7 @@ import org.testng.IExecutionListener;
 /**
  * Demonstrates {@link IExecutionListener} - the coarsest-grained TestNG
  * lifecycle hook, called exactly once per TestNG execution (one run of the
- * TestNG engine, e.g. one {@code mvn test} / one {@code TestNG.run()} call),
+ * TestNG engine, e.g. one {@code TestNG.run()} call),
  * regardless of how many suites are executed inside that run. A single JVM
  * can perform several such executions in sequence.
  *
@@ -11,9 +11,10 @@ import org.testng.IExecutionListener;
  * use {@code IExecutionListener} when you need to initialise or tear down
  * resources that span <em>across multiple suites</em> within one execution.
  *
- * <p><b>JUnit 5 equivalent:</b> there is no exact match; the closest
- * approach is a JVM-level extension registered via {@code ServiceLoader}
- * or a global {@code LauncherSessionListener}.
+ * <p><b>JUnit comparison:</b> a {@code LauncherSessionListener} follows
+ * launcher-session boundaries, which can differ from a single execution.
+ * Registering a Jupiter extension through {@code ServiceLoader} does not
+ * make its callbacks execution-wide.
  *
  * <h2>Registration</h2>
  * {@code IExecutionListener} extends {@code ITestNGListener}, so it can be
@@ -26,7 +27,7 @@ import org.testng.IExecutionListener;
  * This Workshop registers it in {@code testngsuites.xml} so it reliably
  * wraps every suite in the demo run — see {@code testngsuites.xml}.
  *
- * <h2>Fixture execution order</h2>
+ * <h2>Lifecycle callback order</h2>
  * <pre>
  * IExecutionListener.onExecutionStart()   fires once before all suites
  *   ISuiteListener.onStart(suite)         fires per suite

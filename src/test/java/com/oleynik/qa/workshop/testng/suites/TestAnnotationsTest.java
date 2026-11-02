@@ -8,7 +8,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 /**
- * Demonstrates {@code @BeforeTest} and {@code @AfterTest} - fixtures that
+ * Demonstrates {@code @BeforeTest} and {@code @AfterTest} - configuration methods that
  * run once for every {@code <test>} element defined in a TestNG XML suite
  * file, wrapping all test classes grouped under that element.
  *
@@ -30,7 +30,7 @@ import org.testng.annotations.Test;
  * {@code @AfterTest} fire exactly once - the same as {@code @BeforeClass}
  * / {@code @AfterClass} in that scenario.
  *
- * <h2>Fixture execution order (with testng.xml)</h2>
+ * <h2>Lifecycle callback order (with testng.xml)</h2>
  * <pre>
  * @BeforeSuite
  *   @BeforeTest   fires once per &lt;test&gt; block

@@ -79,7 +79,7 @@ src/
 │   ├── annotations/     # @Retries, @DataSource
 │   ├── dataproviders/   # MyDataProvider
 │   ├── listeners/       # MyTestListener, MyMethodListener, MyExtendedTestListener, RetryTransformer
-│   ├── model/           # User, MyDoubleWrapper (Lombok)
+│   ├── model/           # MyDoubleWrapper, ShoppingCart, User (Lombok on wrapper/user models)
 │   ├── retry/           # RetryAnalyzer
 │   ├── suites/          # MySuiteListener, MyExecutionListener
 │   ├── Factorial.java
@@ -89,7 +89,8 @@ src/
     ├── ddt/             # StaticDataProviderTest, DynamicDataProviderTest, OuterDataProviderTest
     ├── dependencies/    # DependenciesTest
     ├── execution/order/ # ExecutionOrderTest
-    ├── general/         # AssertTest, ExceptionTest, FixturesTest, HamcrestTest,
+    ├── fixtures/        # ImplicitFixtureTest, InlineFixtureTest, SharedFixtureTest
+    ├── general/         # AssertTest, ExceptionTest, LifecycleTest, HamcrestTest,
     │                    # TimeoutTest, DisabledTest, DescriptionTest
     ├── group/asserts/   # SoftAssertTest
     ├── grouping/        # GroupTest
@@ -113,6 +114,16 @@ src/test/resources/
 
 ---
 
+## Fixtures and lifecycle
+
+- A fixture is the state, data, and objects required by a test; setup prepares it. Lifecycle callbacks control when setup and cleanup run.
+- Fresh Fixture / Shared Fixture describes whether state is recreated or reused. Inline Setup / Implicit Setup describes how preparation is invoked.
+- Keep InlineFixtureTest and ImplicitFixtureTest scenarios equivalent. Both use a fresh ShoppingCart; scenario-specific prices and quantities stay in the tests.
+- ImplicitFixtureTest and SharedFixtureTest use cart fields and class-level @Test(singleThreaded = true) to prevent races under parallel=methods. Preserve the global methods/3 defaults.
+- SharedFixtureTest reuses an immutable price catalog from @BeforeClass and creates a fresh cart per test in @BeforeMethod. Tests must also pass individually without an execution-order dependency.
+
+---
+
 ## Coding conventions
 
 ### Naming
@@ -130,7 +141,7 @@ src/test/resources/
 - `@BeforeSuite` / `@AfterSuite` methods do not need `public`
 
 ### Output
-- `System.out.println` in fixture and listener methods is **intentional** — it demonstrates execution order
+- `System.out.println` in lifecycle and listener methods is **intentional** — it demonstrates execution order
 - Do not replace these with a logger
 
 ### Lombok
@@ -141,14 +152,14 @@ src/test/resources/
 
 ## Important TestNG rules
 
-| Rule                                                               | Why                                                                   |
-|--------------------------------------------------------------------|-----------------------------------------------------------------------|
-| Do **not** use `@org.junit.jupiter.api.Test`                       | This project is TestNG-only                                           |
+| Rule                                                                                      | Why                                                                                                                     |
+|-------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
+| Do **not** use `@org.junit.jupiter.api.Test`                                              | This project is TestNG-only                                                                                             |
 | `IExecutionListener` can be registered via `@Listeners`, `testng.xml`, or `ServiceLoader` | It implements `ITestNGListener`; the "XML only" exception applies to `IAnnotationTransformer`, not `IExecutionListener` |
-| `ISuiteListener` can be registered either way                      | Via `@Listeners` on a class or in `testng.xml` `<listeners>` block    |
-| `@Retries` is a custom annotation                                  | It is read by `RetryAnalyzer` via reflection — not natively by TestNG |
-| Do not add static mutable state to test classes                    | `parallel=methods`, `threadCount=3` is active by default in `pom.xml` |
-| Do not modify `<parallel>` in `pom.xml` without auditing all tests | Can cause race conditions on shared state                             |
+| `ISuiteListener` can be registered either way                                             | Via `@Listeners` on a class or in `testng.xml` `<listeners>` block                                                      |
+| `@Retries` is a custom annotation                                                         | It is read by `RetryAnalyzer` via reflection — not natively by TestNG                                                   |
+| Do not add static mutable state to test classes                                           | `parallel=methods`, `threadCount=3` is active by default in `pom.xml`                                                   |
+| Do not modify `<parallel>` in `pom.xml` without auditing all tests                        | Can cause race conditions on shared state                                                                               |
 
 ---
 
@@ -209,31 +220,32 @@ public class TestListenerTest { ... }
 
 ## Feature index (for navigation)
 
-| Feature                 | Package           | Key class(es)                                   |
-|-------------------------|-------------------|-------------------------------------------------|
-| Basic assertions        | `general`         | `AssertTest`                                    |
-| Fixtures / lifecycle    | `general`         | `FixturesTest`                                  |
-| Exception testing       | `general`         | `ExceptionTest`                                 |
-| Timeouts                | `general`         | `TimeoutTest`                                   |
-| Disabling / skipping    | `general`         | `DisabledTest`                                  |
-| Hamcrest matchers       | `general`         | `HamcrestTest`                                  |
-| Soft assertions         | `group/asserts`   | `SoftAssertTest`                                |
-| Assumptions (AssertJ)   | `conditional`     | `AssumeTest`, `AssumeBeforeClassTest`           |
-| Data providers (static) | `ddt`             | `StaticDataProviderTest`                        |
-| Data providers (CSV)    | `ddt`             | `DynamicDataProviderTest`                       |
-| External data provider  | `ddt`             | `OuterDataProviderTest`                         |
-| Nested test classes     | `nested`          | `NestedTest`                                    |
-| Groups                  | `grouping`        | `GroupTest`                                     |
-| Test dependencies       | `dependencies`    | `DependenciesTest`                              |
-| Execution ordering      | `execution/order` | `ExecutionOrderTest`                            |
-| Suite annotations       | `suites`          | `SuiteAnnotationsTest`                          |
-| Test-block annotations  | `suites`          | `TestAnnotationsTest`                           |
-| ISuiteListener          | `suites`          | `SuiteListenerTest` + `MySuiteListener`         |
-| IExecutionListener      | `suites`          | `ExecutionListenerTest` + `MyExecutionListener` |
-| ITestListener           | `listeners`       | `TestListenerTest` + `MyTestListener`           |
-| IInvokedMethodListener  | `listeners`       | `MethodListenerTest` + `MyMethodListener`       |
-| TestListenerAdapter     | `listeners`       | `TestListenerTest` + `MyExtendedTestListener`   |
-| Retry (IRetryAnalyzer)  | `retry`           | `RetryTest` + `RetryAnalyzer`                   |
-| Retry (transformer)     | `retry`           | `RetryTransformerTest` + `RetryTransformer`     |
-| Repeated execution      | `repeat`          | `RepeatedTest`                                  |
+| Feature                 | Package           | Key class(es)                                                   |
+|-------------------------|-------------------|-----------------------------------------------------------------|
+| Basic assertions        | `general`         | `AssertTest`                                                    |
+| Test lifecycle          | `general`         | `LifecycleTest`                                                 |
+| Fresh / Shared fixtures | `fixtures`        | `ImplicitFixtureTest`, `InlineFixtureTest`, `SharedFixtureTest` |
+| Exception testing       | `general`         | `ExceptionTest`                                                 |
+| Timeouts                | `general`         | `TimeoutTest`                                                   |
+| Disabling / skipping    | `general`         | `DisabledTest`                                                  |
+| Hamcrest matchers       | `general`         | `HamcrestTest`                                                  |
+| Soft assertions         | `group/asserts`   | `SoftAssertTest`                                                |
+| Assumptions (AssertJ)   | `conditional`     | `AssumeTest`, `AssumeBeforeClassTest`                           |
+| Data providers (static) | `ddt`             | `StaticDataProviderTest`                                        |
+| Data providers (CSV)    | `ddt`             | `DynamicDataProviderTest`                                       |
+| External data provider  | `ddt`             | `OuterDataProviderTest`                                         |
+| Nested test classes     | `nested`          | `NestedTest`                                                    |
+| Groups                  | `grouping`        | `GroupTest`                                                     |
+| Test dependencies       | `dependencies`    | `DependenciesTest`                                              |
+| Execution ordering      | `execution/order` | `ExecutionOrderTest`                                            |
+| Suite annotations       | `suites`          | `SuiteAnnotationsTest`                                          |
+| Test-block annotations  | `suites`          | `TestAnnotationsTest`                                           |
+| ISuiteListener          | `suites`          | `SuiteListenerTest` + `MySuiteListener`                         |
+| IExecutionListener      | `suites`          | `ExecutionListenerTest` + `MyExecutionListener`                 |
+| ITestListener           | `listeners`       | `TestListenerTest` + `MyTestListener`                           |
+| IInvokedMethodListener  | `listeners`       | `MethodListenerTest` + `MyMethodListener`                       |
+| TestListenerAdapter     | `listeners`       | `TestListenerTest` + `MyExtendedTestListener`                   |
+| Retry (IRetryAnalyzer)  | `retry`           | `RetryTest` + `RetryAnalyzer`                                   |
+| Retry (transformer)     | `retry`           | `RetryTransformerTest` + `RetryTransformer`                     |
+| Repeated execution      | `repeat`          | `RepeatedTest`                                                  |
 
